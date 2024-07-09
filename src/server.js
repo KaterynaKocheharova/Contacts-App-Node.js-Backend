@@ -1,6 +1,6 @@
 import express from 'express';
 import pino from 'pino';
-import pinoMiddleware from "pino-http";
+import pinoMiddleware from 'pino-http';
 import cors from 'cors';
 import { getEnvVariable } from './utils/env.js';
 
@@ -25,6 +25,13 @@ export const setUpServer = () => {
 
   //   CORS
   app.use(cors());
+
+  //   PROCESSING NON-EXISTING PATHS
+  app.get('*', (req, res) => {
+    res.status(404).json({
+      message: 'Not found',
+    });
+  });
 
   //   PORT LISTENING
   app.listen(PORT, () => {
