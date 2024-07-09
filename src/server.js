@@ -3,6 +3,7 @@ import pino from 'pino';
 import pinoMiddleware from 'pino-http';
 import cors from 'cors';
 import { getEnvVariable } from './utils/env.js';
+import { findContacts } from './services/contacts.js';
 
 export const setUpServer = () => {
   const app = express();
@@ -25,6 +26,17 @@ export const setUpServer = () => {
 
   //   CORS
   app.use(cors());
+
+  //  ROUTE GET CONTACTS
+
+  app.get('/contacts', async (req, res) => {
+    const contacts = await findContacts();
+    res.status(200).json({
+      data: contacts,
+    });
+  });
+
+
 
   //   PROCESSING NON-EXISTING PATHS
   app.get('*', (req, res) => {
