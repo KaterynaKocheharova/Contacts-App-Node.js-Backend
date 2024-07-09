@@ -3,7 +3,7 @@ import pino from 'pino';
 import pinoMiddleware from 'pino-http';
 import cors from 'cors';
 import { getEnvVariable } from './utils/env.js';
-import { findContacts } from './services/contacts.js';
+import { findContacts, findContactById } from './services/contacts.js';
 
 export const setUpServer = () => {
   const app = express();
@@ -36,7 +36,19 @@ export const setUpServer = () => {
     });
   });
 
-
+  app.get('/contacts:id', async (req, res) => {
+    const { id } = req.params;
+    const contact = await findContactById(id);
+    if (contact) {
+      res.status(200).json({
+        data: contact,
+      });
+    } else {
+      res.status(404).json({
+        message: 'No contact with such id found',
+      });
+    }
+  });
 
   //   PROCESSING NON-EXISTING PATHS
   app.get('*', (req, res) => {
