@@ -16,8 +16,6 @@ export const initMongoConnection = async () => {
   }
 };
 
-
-
 // import mongoose from 'mongoose';
 // import { getEnvVariable } from '../utils/env.js';
 
@@ -40,4 +38,3 @@ export const initMongoConnection = async () => {
 //     console.error('Error connecting to MongoDB:', error);
 //   }
 // };
-
