@@ -30,4 +30,3 @@ const contactsSchema = new Schema(
 
 export const ContactsCollection = model('contacts', contactsSchema);
 
-// var Model = mongoose.model("Model", fileSchema, "pure name your db collection");
