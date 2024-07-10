@@ -30,15 +30,17 @@ export const setUpServer = () => {
   //  ROUTE GET CONTACTS
 
   app.get('/contacts', async (req, res) => {
+    logger.info(req.url);
     const contacts = await findContacts();
     res.status(200).json({
       data: contacts,
     });
   });
 
-  app.get('/contacts:id', async (req, res) => {
-    const { id } = req.params;
-    const contact = await findContactById(id);
+
+  app.get('/contacts/:contactId', async (req, res) => {
+    const { contactId } = req.params;
+    const contact = await findContactById(contactId);
     if (contact) {
       res.status(200).json({
         data: contact,
