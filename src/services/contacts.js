@@ -5,8 +5,11 @@ export const findContacts = async () => {
   return data;
 };
 
-export const findContactById = async (id) => {
-  const data = await ContactsCollection.findById(id);
-  return data;
-};
-
+// export const findContactById = async (id) => {
+//   try {
+//     const data = await ContactsCollection.findById(id);
+//     return data;
+//   } catch {
+//     return null;
+//   }
+// };
