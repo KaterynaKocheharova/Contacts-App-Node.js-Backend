@@ -12,6 +12,12 @@ export const setUpServer = () => {
 
   const logger = setUpMiddlewares(app);
 
+  app.get('*', (req, res) => {
+    res.status(404).json({
+      message: 'Not found page!',
+    });
+  });
+
   // ================= PORT LISTENING
 
   app.listen(PORT, () => {
