@@ -1,4 +1,4 @@
-import { findContacts } from "../services/contacts.js";
+import { findContacts, findContactById } from "../services/contacts.js";
 import { ContactsCollection } from "../db/models/contacts.js";
 
 export const setUpControllers = (app) => {
@@ -16,6 +16,7 @@ export const setUpControllers = (app) => {
     try {
       const { contactId } = req.params;
       const contact = await ContactsCollection.findById(contactId);
+      // const contact = await findContactById(contactId);
 
       if (contact === null) {
         return res.status(404).send({
