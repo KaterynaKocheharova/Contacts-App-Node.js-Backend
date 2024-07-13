@@ -1,43 +1,35 @@
-import { findContacts, findContactById } from "../services/contacts.js";
+import { findContacts, findContactById } from '../services/contacts.js';
 
-export const setUpControllers = (app) => {
-
- //  ROUTE GET CONTACTS
-
- app.get('/contacts', async (req, res) => {
-    const contacts = await findContacts();
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully found contacts',
-      data: contacts,
-    });
+export const findContactsController = async (req, res) => {
+  const contacts = await findContacts();
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found contacts',
+    data: contacts,
   });
+};
 
-  // =================== ROUTE GET CONTACT BY ID
-
-  app.get('/contacts/:contactId', async (req, res) => {
+export const findContactByIdController = async (req, res) => {
+  try {
     const { contactId } = req.params;
     const contact = await findContactById(contactId);
 
-    if (!contact) {
-      res.status(404).json({
+    if (contact === null) {
+      return res.status(404).send({
         message: 'No contact with such id found',
       });
-      return;
     }
 
-    res.status(200).json({
+    res.status(200).send({
       status: 200,
       message: `Successfully found contact with id ${contactId}`,
       data: contact,
     });
-  });
-
-    // ================= PROCESSING NON-EXISTING PATHS
-
-    app.get('*', (req, res) => {
-        res.status(404).json({
-          message: 'Not found page!',
-        });
-      });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: 'An error occurred while retrieving the contact',
+      error: error.message,
+    });
+  }
 };
