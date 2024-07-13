@@ -19,6 +19,25 @@ export const setUpServer = () => {
     });
   });
 
+  const buildErrorMessage = (error) => {
+    if (error.message.includes('Cast to ObjectId failed')) {
+      return "Contact with the given id not found";
+    }
+    // Add more cases as needed
+    switch (error.message) {
+      // Add specific cases if there are any other known error messages
+      default:
+        return "An unexpected error occurred";
+    }
+  };
+
+  app.use((error, req, res, next) => {
+    const message = buildErrorMessage(error);
+    res.status(500).send({
+      error: message,
+    });
+  });
+
   // ================= PORT LISTENING
 
   app.listen(PORT, () => {
