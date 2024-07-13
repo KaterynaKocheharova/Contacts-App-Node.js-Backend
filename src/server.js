@@ -21,13 +21,13 @@ export const setUpServer = () => {
 
   const buildErrorMessage = (error) => {
     if (error.message.includes('Cast to ObjectId failed')) {
-      return "Contact with the given id not found";
+      return 'Contact with the given id not found';
     }
     // Add more cases as needed
     switch (error.message) {
       // Add specific cases if there are any other known error messages
       default:
-        return "An unexpected error occurred";
+        return 'An unexpected error occurred';
     }
   };
 

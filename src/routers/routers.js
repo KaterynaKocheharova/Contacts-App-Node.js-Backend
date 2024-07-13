@@ -1,5 +1,5 @@
 import { Router } from 'express';
-// import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { tryCatchWrapper } from '../utils/tryCatchWrappaer.js';
 import {
   findContactsController,
   findContactByIdController,
@@ -8,5 +8,5 @@ import {
 const router = Router();
 export default router;
 
-router.get('/contacts', findContactsController);
-router.get('/contacts/:contactId', findContactByIdController);
+router.get('/contacts', tryCatchWrapper(findContactsController));
+router.get('/contacts/:contactId', tryCatchWrapper(findContactByIdController));
