@@ -1,42 +1,37 @@
 import express from 'express';
+import pino from 'pino';
+import pinoMiddleware from 'pino-http';
+import cors from 'cors';
 import { getEnvVariable } from './utils/env.js';
-import { setUpMiddlewares } from './middlewares/middlewares.js';
 import studentsRouter from './routers/routers.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errHandler } from './middlewares/errHandler.js';
 
 export const setUpServer = () => {
   const app = express();
   const PORT = getEnvVariable('PORT', 3000);
 
-  setUpMiddlewares(app);
+  const logger = pino({
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'SYS:standard',
+        ignore: 'req,res,hostname,pid',
+        messageFormat: '{msg}',
+      },
+    },
+  });
 
-  const logger = setUpMiddlewares(app);
+  app.use(pinoMiddleware({ logger }));
+
+  app.use(cors());
 
   app.use(studentsRouter);
 
-  app.get('*', (req, res) => {
-    res.status(404).json({
-      message: 'Not found page!',
-    });
-  });
+  app.use("*", notFoundHandler);
 
-  const buildErrorMessage = (error) => {
-    if (error.message.includes('Cast to ObjectId failed')) {
-      return 'Contact with the given id not found';
-    }
-    // Add more cases as needed
-    switch (error.message) {
-      // Add specific cases if there are any other known error messages
-      default:
-        return 'An unexpected error occurred';
-    }
-  };
-
-  app.use((error, req, res, next) => {
-    const message = buildErrorMessage(error);
-    res.status(500).send({
-      error: message,
-    });
-  });
+  app.use(errHandler);
 
   // ================= PORT LISTENING
 
