@@ -24,6 +24,12 @@ export const setUpServer = () => {
   const app = express();
   const PORT = getEnvVariable('PORT', 3000);
 
+  app.use(
+    express.json({
+      type: ['application/json', 'application/vnd.api+json'],
+      limit: '100kb',
+    }),
+  );
 
   app.use(pinoMiddleware({ logger }));
 
