@@ -7,21 +7,23 @@ import studentsRouter from './routers/routers.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errHandler } from './middlewares/errHandler.js';
 
+export const logger = pino({
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      colorize: true,
+      translateTime: 'SYS:standard',
+      ignore: 'req,res,hostname,pid',
+      messageFormat: '{msg}',
+    },
+  },
+});
+
+
 export const setUpServer = () => {
   const app = express();
   const PORT = getEnvVariable('PORT', 3000);
 
-  const logger = pino({
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        translateTime: 'SYS:standard',
-        ignore: 'req,res,hostname,pid',
-        messageFormat: '{msg}',
-      },
-    },
-  });
 
   app.use(pinoMiddleware({ logger }));
 
@@ -29,7 +31,7 @@ export const setUpServer = () => {
 
   app.use(studentsRouter);
 
-  app.use("*", notFoundHandler);
+  app.use('*', notFoundHandler);
 
   app.use(errHandler);
 
