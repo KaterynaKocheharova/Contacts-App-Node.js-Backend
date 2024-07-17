@@ -1,4 +1,5 @@
 import { ContactsCollection } from '../db/models/contacts.js';
+import { logger } from '../server.js';
 
 export const findContacts = async () => {
   const data = await ContactsCollection.find();
@@ -6,8 +7,8 @@ export const findContacts = async () => {
 };
 
 export const findContactById = async (id) => {
-    const data = await ContactsCollection.findById(id);
-    return data;
+  const data = await ContactsCollection.findById(id);
+  return data;
 };
 
 export const createContact = async (payload) => {
@@ -18,4 +19,27 @@ export const createContact = async (payload) => {
 export const deleteContact = async (id) => {
   const data = await ContactsCollection.findOneAndDelete(id);
   return data;
+};
+
+export const upsertContact = async (id, payload, options = {}) => {
+  const rawData = await ContactsCollection.findOneAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+      includeResultMetadata: true,
+      ...options,
+    },
+  );
+
+  logger.info(rawData);
+
+  if (!rawData.value) {
+    return null;
+  }
+
+  return {
+    contact: rawData.value,
+    isNew: rawData?.lastErrorObject?.upserted,
+  };
 };
