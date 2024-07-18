@@ -2,8 +2,8 @@ import express from 'express';
 import pino from 'pino';
 import pinoMiddleware from 'pino-http';
 import cors from 'cors';
-import contactsRoutes from './routers/routers.js';
-import { errHandler } from './middlewares/errHandler.js';
+import contactsRoutes from './routers/contacts.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 import {notFoundHandler} from "./middlewares/notFoundHandler.js";
 
 export const logger = pino({
@@ -29,6 +29,6 @@ app.use(
 );
 app.use(contactsRoutes);
 app.use(notFoundHandler);
-app.use(errHandler);
+app.use(errorHandler);
 
 export default app;

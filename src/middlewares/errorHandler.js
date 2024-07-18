@@ -1,11 +1,11 @@
 import { HttpError } from 'http-errors';
 
-export const errHandler = (error, req, res, next) => {
+export const errorHandler = (error, req, res, next) => {
   if (error instanceof HttpError) {
     res.status(error.status).send({
       status: error.status,
       name: error.name,
-      data: error,
+      data: error.message,
     });
     return;
   }
@@ -13,6 +13,6 @@ export const errHandler = (error, req, res, next) => {
   res.status(500).send({
     status: 500,
     name: 'Something went wrong',
-    error: error.message,
+    data: error.message,
   });
 };
