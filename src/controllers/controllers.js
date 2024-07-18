@@ -6,7 +6,7 @@ import {
   upsertContact,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
-import { logger } from '../server.js';
+import { logger } from '../app.js';
 
 export const findContactsController = async (req, res) => {
   const contacts = await findContacts();

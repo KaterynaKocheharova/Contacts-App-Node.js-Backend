@@ -1,48 +1,9 @@
-import express from 'express';
-import pino from 'pino';
-import pinoMiddleware from 'pino-http';
-import cors from 'cors';
+import app from "./app.js";
 import { getEnvVariable } from './utils/env.js';
-import studentsRouter from './routers/routers.js';
-import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import { errHandler } from './middlewares/errHandler.js';
-
-export const logger = pino({
-  transport: {
-    target: 'pino-pretty',
-    options: {
-      colorize: true,
-      translateTime: 'SYS:standard',
-      ignore: 'req,res,hostname,pid',
-      messageFormat: '{msg}',
-    },
-  },
-});
-
+import { logger } from './app.js';
 
 export const setUpServer = () => {
-  const app = express();
   const PORT = getEnvVariable('PORT', 3000);
-
-  app.use(
-    express.json({
-      type: ['application/json', 'application/vnd.api+json'],
-      limit: '100kb',
-    }),
-  );
-
-  app.use(pinoMiddleware({ logger }));
-
-  app.use(cors());
-
-  app.use(studentsRouter);
-
-  app.use('*', notFoundHandler);
-
-  app.use(errHandler);
-
-  // ================= PORT LISTENING
-
   app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);
   });
