@@ -5,7 +5,8 @@ import {
   findContactByIdController,
   createContactController,
   deleteContactController,
-  upsertContactController
+  upsertContactController,
+  patchContactController
 } from '../controllers/controllers.js';
 
 const router = Router();
@@ -16,3 +17,4 @@ router.get('/contacts/:contactId', tryCatchWrapper(findContactByIdController));
 router.post('/contacts', tryCatchWrapper(createContactController));
 router.delete('/contacts/:contactId', tryCatchWrapper(deleteContactController));
 router.put('/contacts/:contactId', tryCatchWrapper(upsertContactController));
+router.patch('/contacts/:contactId', tryCatchWrapper(patchContactController));

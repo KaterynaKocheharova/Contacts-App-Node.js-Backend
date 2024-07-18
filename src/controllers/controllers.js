@@ -64,7 +64,21 @@ export const upsertContactController = async (req, res) => {
   const status = upsertedContact.isNew ? 201 : 200;
   res.status(status).send({
     status,
-    message: 'Successfully upserted a contact',
+    message: 'Successfully upserted the contact',
     data: upsertedContact.contact,
+  });
+};
+
+export const patchContactController = async (req, res) => {
+  const { contactId } = req.params;
+  const patchedContact = await upsertContact(contactId, req.body);
+  if (!patchedContact) {
+    throw createHttpError('404', 'Contact not found');
+  }
+
+  res.status(200).send({
+    status: 200,
+    message: 'Successfully patched the contact',
+    data: patchedContact.contact,
   });
 };
