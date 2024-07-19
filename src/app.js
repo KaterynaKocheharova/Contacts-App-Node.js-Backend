@@ -2,7 +2,7 @@ import express from 'express';
 import pino from 'pino';
 import pinoMiddleware from 'pino-http';
 import cors from 'cors';
-import contactsRoutes from './routers/contacts.js';
+import contactsRouter from './routers/contacts.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import {notFoundHandler} from "./middlewares/notFoundHandler.js";
 
@@ -27,7 +27,7 @@ app.use(cors());
 //     limit: '100kb',
 //   }),
 // );
-app.use(contactsRoutes);
+app.use("/contacts",contactsRouter);
 app.use(notFoundHandler);
 app.use(errorHandler);
 

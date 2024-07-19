@@ -12,11 +12,11 @@ import express from "express";
 const router = express.Router();
 const jsonParser = express.json();
 
-router.get('/contacts', ctrlWrapper(findContactsController));
-router.get('/contacts/:contactId', ctrlWrapper(findContactByIdController));
-router.post('/contacts', jsonParser, ctrlWrapper(createContactController));
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
-router.put('/contacts/:contactId', jsonParser, ctrlWrapper(upsertContactController));
-router.patch('/contacts/:contactId', jsonParser, ctrlWrapper(patchContactController));
+router.get('/', ctrlWrapper(findContactsController));
+router.get('/:contactId', ctrlWrapper(findContactByIdController));
+router.post('/', jsonParser, ctrlWrapper(createContactController));
+router.delete('/:contactId', ctrlWrapper(deleteContactController));
+router.put('/:contactId', jsonParser, ctrlWrapper(upsertContactController));
+router.patch('/:contactId', jsonParser, ctrlWrapper(patchContactController));
 
 export default router;
