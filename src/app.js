@@ -21,12 +21,12 @@ export const logger = pino({
 const app = express();
 app.use(pinoMiddleware({ logger }));
 app.use(cors());
-app.use(
-  express.json({
-    type: ['application/json', 'application/vnd.api+json'],
-    limit: '100kb',
-  }),
-);
+// app.use(
+//   express.json({
+//     type: ['application/json', 'application/vnd.api+json'],
+//     limit: '100kb',
+//   }),
+// );
 app.use(contactsRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);

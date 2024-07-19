@@ -6,7 +6,6 @@ import {
   upsertContact,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
-import { logger } from '../app.js';
 
 export const findContactsController = async (req, res) => {
   const contacts = await findContacts();
@@ -31,32 +30,45 @@ export const findContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const contact = await createContact(req.body);
+  const newContact = await createContact({
+    name: req.body.name,
+    phoneNumber: req.body.phoneNumber,
+    isFavorite: req.body.isFavorite,
+    type: req.body.contactType,
+  });
   res.status(201).send({
     status: 201,
     message: `Successfully created a new contact`,
-    data: contact,
+    data: newContact,
   });
 };
 
 export const deleteContactController = async (req, res) => {
   const { contactId } = req.params;
-  const contactToDelete = await deleteContact(contactId);
-  if (!contactToDelete) {
+  const deletedContact = await deleteContact(contactId);
+  if (!deletedContact) {
     throw createHttpError(404, 'Contact not found');
   }
-  res.status(204).send({
-    status: 204,
+  res.status(200).send({
+    status: 200,
     message: 'Successfully deleted the contact',
   });
 };
 
 export const upsertContactController = async (req, res) => {
   const { contactId } = req.params;
-  const upsertedContact = await upsertContact(contactId, req.body, {
-    upsert: true,
-  });
-  logger.info(upsertedContact);
+  const upsertedContact = await upsertContact(
+    contactId,
+    {
+      name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      isFavorite: req.body.isFavorite,
+      type: req.body.contactType,
+    },
+    {
+      upsert: true,
+    },
+  );
   if (!upsertedContact) {
     throw createHttpError('404', 'Contact not found');
   }
@@ -70,7 +82,12 @@ export const upsertContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { contactId } = req.params;
-  const patchedContact = await upsertContact(contactId, req.body);
+  const patchedContact = await upsertContact(contactId, {
+    name: req.body.name,
+    phoneNumber: req.body.phoneNumber,
+    isFavorite: req.body.isFavorite,
+    type: req.body.contactType,
+  });
   if (!patchedContact) {
     throw createHttpError(404, 'Contact not found');
   }
