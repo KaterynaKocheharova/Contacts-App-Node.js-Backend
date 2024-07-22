@@ -6,9 +6,16 @@ import {
   upsertContact,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
+import { parseNumber } from '../utils/parseNumber.js';
 
 export const findContactsController = async (req, res) => {
-  const contacts = await findContacts();
+  const {page, perPage} = req.query;
+
+  const parsedPage = parseNumber(page, 1);
+  const parsedPerPage = parseNumber(perPage, 10);
+
+  const contacts = await findContacts({page: parsedPage, perPage: parsedPerPage});
+
   res.status(200).json({
     status: 200,
     message: 'Successfully found contacts',
