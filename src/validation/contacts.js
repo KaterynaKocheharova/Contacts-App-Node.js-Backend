@@ -1,13 +1,13 @@
 import Joi from 'joi';
 
 export const createContactValidationSchema = Joi.object({
-  name: Joi.string().min(3).max(30).required().messages({
+  name: Joi.string().min(3).max(20).required().messages({
     'string.base': 'Username should be a string',
     'string.min': 'Username should have at least {#limit} characters',
     'string.max': 'Username should have at most {#limit} characters',
     'any.required': 'Username is required',
   }),
-  phoneNumber: Joi.string().min(9).max(13).required().messages({
+  phoneNumber: Joi.string().min(3).max(20).required().messages({
     'string.base': 'Number should be a string',
     'string.min': 'Number should have at least {#limit} characters',
     'string.max': 'Number should have at most {#limit} characters',
@@ -19,17 +19,19 @@ export const createContactValidationSchema = Joi.object({
   isFavorite: Joi.boolean().messages({
     'string.base': 'isFavorite should be a string',
   }),
-  contactType: Joi.string().valid('work', 'home', 'personal'),
+  contactType: Joi.string().valid('work', 'home', 'personal').messages({
+    'any.only': 'Contact should be of type work, home, or personal'
+  }),
 });
 
 export const updateContactValidationSchema = Joi.object({
-  name: Joi.string().min(3).max(30).messages({
+  name: Joi.string().min(3).max(20).messages({
     'string.base': 'Username should be a string',
     'string.min': 'Username should have at least {#limit} characters',
     'string.max': 'Username should have at most {#limit} characters',
     'any.required': 'Username is required',
   }),
-  phoneNumber: Joi.string().min(9).max(13).messages({
+  phoneNumber: Joi.string().min(3).max(20).messages({
     'string.base': 'Number should be a string',
     'string.min': 'Number should have at least {#limit} characters',
     'string.max': 'Number should have at most {#limit} characters',
@@ -41,6 +43,8 @@ export const updateContactValidationSchema = Joi.object({
   isFavorite: Joi.boolean().messages({
     'string.base': 'isFavorite should be a string',
   }),
-  contactType: Joi.string().valid('work', 'home', 'personal'),
+  contactType: Joi.string().valid('work', 'home', 'personal').messages({
+    'any.only': 'Contact should be of type work, home, or personal'
+  }),
 });
 

@@ -4,10 +4,10 @@ import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const findContacts = async ({ page, perPage, sortOrder, sortBy }) => {
   const limit = perPage;
-  const skip = (page - 1) * perPage;
+  const skip = page > 0 ? ((page - 1) * perPage) : 0;
   const contactsCount = await ContactsCollection.find().countDocuments();
   const paginationData = calculatePaginationData(contactsCount, page, perPage);
-  const contacts = await ContactsCollection.find().skip(skip).limit(limit).sort({[sortBy] : sortOrder});
+  const contacts = await ContactsCollection.find().sort({[sortBy] : sortOrder}).skip(skip).limit(limit);
   return {
     data: contacts,
     sortOrder,
