@@ -10,8 +10,6 @@ export const findContacts = async ({ page, perPage, sortOrder, sortBy }) => {
   const contacts = await ContactsCollection.find().sort({[sortBy] : sortOrder}).skip(skip).limit(limit);
   return {
     data: contacts,
-    sortOrder,
-    sortBy,
     ...paginationData,
   };
 };
