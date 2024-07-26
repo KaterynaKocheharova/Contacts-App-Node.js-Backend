@@ -11,3 +11,5 @@ export const keysOfContact = [
   '_createdAt',
   '_updatedAt',
 ];
+
+export const contactTypes = ['work', 'home', 'personal'];

@@ -8,12 +8,13 @@ import {
 import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 export const findContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortOrder, sortBy } = parseSortParams(req.query);
-  console.log(sortOrder, sortBy);
-  const contacts = await findContacts({ page, perPage, sortOrder, sortBy });
+  const filter = parseFilterParams(req.query);
+  const contacts = await findContacts({ page, perPage, sortOrder, sortBy, filter });
 
   res.status(200).json({
     status: 200,
