@@ -1,5 +1,4 @@
 import { ContactsCollection } from '../db/models/contacts.js';
-import { logger } from '../app.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const findContacts = async ({
@@ -66,8 +65,6 @@ export const upsertContact = async (id, payload, options = {}) => {
       ...options,
     },
   );
-
-  logger.info(rawData);
 
   if (!rawData.value) {
     return null;

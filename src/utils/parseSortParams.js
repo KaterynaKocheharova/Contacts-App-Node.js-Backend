@@ -7,15 +7,16 @@ const parseSortOrder = (sortOrder) => {
 };
 
 const parseSortBy = (sortBy) => {
-    const isKnownSortBy = keysOfContact.includes(sortBy);
-    if(!isKnownSortBy) return "_id";
-    return sortBy;
+  const isKnownSortBy = keysOfContact.includes(sortBy);
+  if (!isKnownSortBy) return '_id';
+  return sortBy;
 };
 
 const parseSortParams = (query) => {
   const { sortBy, sortOrder } = query;
   const parsedSortBy = parseSortBy(sortBy);
   const parsedSortOrder = parseSortOrder(sortOrder);
+  console.log(parsedSortBy, parsedSortOrder);
   return {
     sortBy: parsedSortBy,
     sortOrder: parsedSortOrder,

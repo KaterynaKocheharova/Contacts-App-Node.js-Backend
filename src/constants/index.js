@@ -8,8 +8,8 @@ export const keysOfContact = [
   'phoneNumber',
   'email',
   '_id',
-  '_createdAt',
-  '_updatedAt',
+  'createdAt',
+  'updatedAt',
 ];
 
 export const contactTypes = ['work', 'home', 'personal'];
