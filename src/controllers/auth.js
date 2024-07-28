@@ -1,6 +1,6 @@
-import { registerUser } from '../services/auth';
+import { registerUser } from '../services/auth.js';
 
-export const registerUserControllerController = async (req, res) => {
+export const registerUserController = async (req, res) => {
   const {name, email, password} = req.body;
 
   const userData = {
