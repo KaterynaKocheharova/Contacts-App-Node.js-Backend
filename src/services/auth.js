@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt';
+import { randomBytes } from 'crypto';
+import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
+import {SessionsCollection} from '../db/models/session.js';
 
 export const registerUser = async (userData) => {
   const user = await UsersCollection.findOne({ email: userData.email });
@@ -29,5 +32,20 @@ export const loginUser = async (userData) => {
     throw createHttpError(404, 'Anauthorized. Incorrect password');
   }
 
-// other code
+  SessionsCollection.deleteOne({
+    userId: user._id
+  });
+
+  const accessToken = randomBytes(30).toString("base64");
+  const refreshToken = randomBytes(30).toString("base64");
+  const accessTokenValidUntil = new Date(Date.now() + FIFTEEN_MINUTES);
+  const refreshTokenValidUntil = new Date(Date.now() + ONE_DAY);
+
+  return await SessionsCollection.create({
+    userId: user._id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil,
+    refreshTokenValidUntil
+  });
 };
