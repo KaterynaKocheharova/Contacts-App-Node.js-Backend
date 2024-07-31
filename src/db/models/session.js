@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const sessionSchema = new Schema(
   {
-    userId: {
+    sessionId: {
       type: Schema.Types.ObjectId,
       ref: 'users',
     },

@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt';
-import { randomBytes } from 'crypto';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
+import { createSession } from './utils.js';
 
 export const registerUser = async (userData) => {
   const user = await UsersCollection.findOne({ email: userData.email });
@@ -14,6 +13,7 @@ export const registerUser = async (userData) => {
   return UsersCollection.create({ ...userData, password: encryptedPassword });
 };
 
+// ========================================= LOGIN
 export const loginUser = async (userData) => {
   const user = await UsersCollection.findOne({
     email: userData.email,
@@ -28,28 +28,43 @@ export const loginUser = async (userData) => {
   if (!isCorrectPassowrd) {
     throw createHttpError(404, 'Anauthorized. Incorrect password');
   }
+
   SessionsCollection.deleteOne({
-    userId: user._id,
+    sessionId: user._id,
   });
 
+  const newSession = createSession(user._id);
+  return await SessionsCollection.create(newSession);
 };
+
+// ===================================== LOGOUT
 
 export const logOut = (sessionId) =>
-  SessionsCollection.deleteOne({ userId: sessionId });
+  SessionsCollection.deleteOne({ sessionId });
 
-
-
-
-
-
-const createSession = () => {
-
-};
+// =================================== REFRESH
 
 export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
+  const session = await SessionsCollection.findOne({
+    sessionId,
+    refreshToken,
+  });
 
+  if (!session) {
+    throw createHttpError(401, 'Session not found');
+  }
+
+  const isRefreshTokenExpired =
+    new Date() > new Date(session.refreshTokenValidUntil);
+  if (isRefreshTokenExpired) {
+    throw createHttpError(401, 'Session token expired');
+  }
+
+  const newSession = createSession(sessionId); // Use the correct sessionId
+  await SessionsCollection.deleteOne({
+    _id: sessionId,
+    refreshToken,
+  });
+
+  return await SessionsCollection.create(newSession);
 };
-
-
-
-
