@@ -4,7 +4,7 @@ import {
   logOut,
   refreshUsersSession,
 } from '../services/auth.js';
-import { ONE_DAY } from '../constants/index.js';
+import { setupCookies } from './utils.js';
 
 // ========================================== REGISTER
 
@@ -33,23 +33,15 @@ export const loginUserController = async (req, res) => {
     email,
     password,
   };
-  const { accessToken, refreshToken, sessionId } = await loginUser(userData);
+  const session = await loginUser(userData);
 
-  res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
-
-  res.cookie('sessionId', sessionId, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
+  setupCookies(res, session);
 
   res.status(200).json({
     status: 200,
     message: 'Successfully logged in',
     data: {
-      accessToken,
+      accessToken: session.accessToken,
     },
   });
 };
@@ -75,15 +67,7 @@ export const refreshUserSessionController = async (req, res) => {
     refreshToken: req.cookies.refreshToken,
   });
 
-  res.cookie('sessionId', session.sessionId, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
-
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
+  setupCookies(res, session);
 
   res.status(200).json({
     status: 200,
