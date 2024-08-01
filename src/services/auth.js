@@ -4,9 +4,10 @@ import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
 import { createSession } from './utils.js';
 
+// ======================================= REGISTER
 export const registerUser = async (userData) => {
-  const user = await UsersCollection.findOne({ email: userData.email });
-  if (user) {
+  const alreadyExistingUser = await UsersCollection.findOne({ email: userData.email });
+  if (alreadyExistingUser !== null) {
     throw createHttpError(409, 'User with this email already exists');
   }
   const encryptedPassword = await bcrypt.hash(userData.password, 10);
@@ -18,7 +19,7 @@ export const loginUser = async (userData) => {
   const user = await UsersCollection.findOne({
     email: userData.email,
   });
-  if (!user) {
+  if (user === null) {
     throw createHttpError(404, 'User with the give email not found.');
   }
   const isCorrectPassowrd = await bcrypt.compare(
@@ -49,11 +50,9 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     sessionId,
     refreshToken,
   });
-
   if (!session) {
     throw createHttpError(401, 'Session not found');
   }
-
   const isRefreshTokenExpired =
     new Date() > new Date(session.refreshTokenValidUntil);
   if (isRefreshTokenExpired) {
