@@ -11,11 +11,11 @@ import parseSortParams from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 export const findContactsController = async (req, res) => {
+  const userId = req.user._id;
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortOrder, sortBy } = parseSortParams(req.query);
-  console.log(sortOrder, sortBy);
   const filter = parseFilterParams(req.query);
-  const contacts = await findContacts({ page, perPage, sortOrder, sortBy, filter });
+  const contacts = await findContacts({ page, perPage, sortOrder, sortBy, filter, userId });
 
   res.status(200).json({
     status: 200,
@@ -43,6 +43,7 @@ export const createContactController = async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     isFavorite: req.body.isFavorite,
     type: req.body.contactType,
+    userId: req.user._id
   });
   res.status(201).send({
     status: 201,
@@ -69,6 +70,7 @@ export const upsertContactController = async (req, res) => {
       phoneNumber: req.body.phoneNumber,
       isFavorite: req.body.isFavorite,
       type: req.body.contactType,
+      userId: req.user._id
     },
     {
       upsert: true,
@@ -92,6 +94,7 @@ export const patchContactController = async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     isFavorite: req.body.isFavorite,
     type: req.body.contactType,
+    userId: req.user._id
   });
   if (!patchedContact) {
     throw createHttpError(404, 'Contact not found');

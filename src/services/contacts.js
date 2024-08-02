@@ -7,7 +7,9 @@ export const findContacts = async ({
   sortOrder,
   sortBy,
   filter,
+  userId,
 }) => {
+
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
@@ -21,8 +23,10 @@ export const findContacts = async ({
     contactsQuery.where('contactType').equals(filter.contactType);
   }
 
+
+  console.log(userId);
   const [contactsCount, contacts] = await Promise.all([
-    ContactsCollection.find().merge(contactsQuery).countDocuments(),
+    ContactsCollection.find({userId: userId}).merge(contactsQuery).countDocuments(),
     contactsQuery
       .skip(skip)
       .limit(limit)
