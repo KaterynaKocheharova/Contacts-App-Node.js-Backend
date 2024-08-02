@@ -1,3 +1,46 @@
+// import { ContactsCollection } from '../db/models/contacts.js';
+// import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+
+// export const findContacts = async ({
+//   page,
+//   perPage,
+//   sortOrder,
+//   sortBy,
+//   filter,
+//   userId,
+// }) => {
+
+//   const limit = perPage;
+//   const skip = page > 0 ? (page - 1) * perPage : 0;
+
+//   const contactsQuery = ContactsCollection.find();
+
+//   if (filter.isFavorite) {
+//     contactsQuery.where('isFavorite').equals(filter.isFavorite);
+//   }
+
+//   if (filter.contactType) {
+//     contactsQuery.where('contactType').equals(filter.contactType);
+//   }
+
+//   console.log(userId);
+//   const [contactsCount, contacts] = await Promise.all([
+//     ContactsCollection.find({userId: userId}).merge(contactsQuery).countDocuments(),
+//     contactsQuery
+//       .skip(skip)
+//       .limit(limit)
+//       .sort({ [sortBy]: sortOrder })
+//       .exec(),
+//   ]);
+
+//   const paginationData = calculatePaginationData(contactsCount, page, perPage);
+
+//   return {
+//     data: contacts,
+//     ...paginationData,
+//   };
+// };
+
 import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
@@ -9,24 +52,27 @@ export const findContacts = async ({
   filter,
   userId,
 }) => {
-
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
-  const contactsQuery = ContactsCollection.find();
+  const query = {
+    userId: userId,
+  };
 
   if (filter.isFavorite) {
-    contactsQuery.where('isFavorite').equals(filter.isFavorite);
+    query.isFavorite = filter.isFavorite;
   }
 
   if (filter.contactType) {
-    contactsQuery.where('contactType').equals(filter.contactType);
+    query.contactType = filter.contactType;
   }
 
+  const contactsQuery = ContactsCollection.find(query);
 
   console.log(userId);
+
   const [contactsCount, contacts] = await Promise.all([
-    ContactsCollection.find({userId: userId}).merge(contactsQuery).countDocuments(),
+    ContactsCollection.countDocuments(query),
     contactsQuery
       .skip(skip)
       .limit(limit)
@@ -42,8 +88,11 @@ export const findContacts = async ({
   };
 };
 
-export const findContactById = async (id) => {
-  const data = await ContactsCollection.findById(id);
+export const findContactById = async (contactId, userId) => {
+  const data = await ContactsCollection.findOne({
+    _id: contactId,
+    userId,
+  });
   return data;
 };
 
@@ -52,16 +101,17 @@ export const createContact = async (newContact) => {
   return data;
 };
 
-export const deleteContact = async (id) => {
+export const deleteContact = async (contactId, userId) => {
   const data = await ContactsCollection.findOneAndDelete({
-    _id: id,
+    _id: contactId,
+    userId,
   });
   return data;
 };
 
-export const upsertContact = async (id, payload, options = {}) => {
+export const upsertContact = async (id, payload, options = {}, userId) => {
   const rawData = await ContactsCollection.findOneAndUpdate(
-    { _id: id },
+    { _id: id, userId },
     payload,
     {
       new: true,

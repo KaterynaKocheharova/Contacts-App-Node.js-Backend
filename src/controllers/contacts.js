@@ -25,8 +25,9 @@ export const findContactsController = async (req, res) => {
 };
 
 export const findContactByIdController = async (req, res) => {
+  const userId = req.user._id;
   const { contactId } = req.params;
-  const contact = await findContactById(contactId);
+  const contact = await findContactById(contactId, userId);
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
   }
@@ -53,8 +54,9 @@ export const createContactController = async (req, res) => {
 };
 
 export const deleteContactController = async (req, res) => {
+  const userId = req.user._id;
   const { contactId } = req.params;
-  const deletedContact = await deleteContact(contactId);
+  const deletedContact = await deleteContact(contactId, userId);
   if (!deletedContact) {
     throw createHttpError(404, 'Contact not found');
   }
@@ -62,8 +64,10 @@ export const deleteContactController = async (req, res) => {
 };
 
 export const upsertContactController = async (req, res) => {
+  const userId = req.user._id;
   const { contactId } = req.params;
   const upsertedContact = await upsertContact(
+    userId,
     contactId,
     {
       name: req.body.name,
@@ -88,8 +92,9 @@ export const upsertContactController = async (req, res) => {
 };
 
 export const patchContactController = async (req, res) => {
+  const userId = req.user.id;
   const { contactId } = req.params;
-  const patchedContact = await upsertContact(contactId, {
+  const patchedContact = await upsertContact(contactId, userId, {
     name: req.body.name,
     phoneNumber: req.body.phoneNumber,
     isFavorite: req.body.isFavorite,
