@@ -5,7 +5,7 @@ export const setupCookies = (res, session) => {
       httpOnly: true,
       expires: new Date(Date.now() + THIRTY_DAYS),
     });
-    res.cookie('sessionId', session.sessionId, {
+    res.cookie('userId', session.userId, {
       httpOnly: true,
       expires: new Date(Date.now() + THIRTY_DAYS),
     });

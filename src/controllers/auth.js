@@ -20,7 +20,7 @@ export const registerUserController = async (req, res) => {
 
   res.status(201).json({
     status: 200,
-    message: 'Successfully registered a user',
+    message: 'Successfully registered the user',
     data: createdUser,
   });
 };
@@ -39,31 +39,18 @@ export const loginUserController = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully logged in a user',
+    message: 'Successfully logged in the user',
     data: {
       accessToken: session.accessToken,
     },
   });
 };
 
-// =============================== LOGOUT
-
-export const logOutController = async (req, res) => {
-  const { sessionId } = req.cookies;
-  if (sessionId) {
-    await logOut(sessionId);
-  }
-
-  res.clearCookie('sessionId');
-  res.clearCookie('refreshToken');
-
-  res.status(204).send();
-};
-
 // ============================== REFRESH
+
 export const refreshUserSessionController = async (req, res) => {
   const session = await refreshUsersSession({
-    sessionId: req.cookies.sessionId,
+    userId: req.cookies.userId,
     refreshToken: req.cookies.refreshToken,
   });
 
@@ -76,4 +63,19 @@ export const refreshUserSessionController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+};
+
+// =============================== LOGOUT
+
+export const logOutController = async (req, res) => {
+  const { userId } = req.cookies;
+  if (userId) {
+    await logOut(userId);
+  }
+
+  res.clearCookie('userId');
+  res.clearCookie('refreshToken');
+  res.clearCookie('sessionId');
+
+  res.status(204).send();
 };
