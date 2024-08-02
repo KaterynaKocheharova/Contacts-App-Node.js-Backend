@@ -16,26 +16,26 @@ export const registerUser = async (userData) => {
 
 // ========================================= LOGIN
 export const loginUser = async (userData) => {
-  const user = await UsersCollection.findOne({
+  const user = await User.findOne({
     email: userData.email,
   });
-  if (user === null) {
-    throw createHttpError(404, 'User with the give email not found.');
+  if (!user) {
+    throw createHttpError(401, 'User with the give email not found.');
   }
   const isCorrectPassowrd = await bcrypt.compare(
     userData.password,
     user.password,
   );
   if (!isCorrectPassowrd) {
-    throw createHttpError(404, 'Anauthorized. Incorrect password');
+    throw createHttpError(401, 'Incorrect password');
   }
 
-  SessionsCollection.deleteOne({
+  Session.deleteOne({
     sessionId: user._id,
   });
 
   const newSession = createSession(user._id);
-  return await SessionsCollection.create(newSession);
+  return await Session.create(newSession);
 };
 
 // ===================================== LOGOUT

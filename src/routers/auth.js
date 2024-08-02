@@ -9,7 +9,7 @@ const jsonParser = express.json();
 
 router.post('/register', jsonParser, validateBody(registerUserSchema), ctrlWrapper(registerUserController));
 router.post('/login', jsonParser, validateBody(loginUserSchema), ctrlWrapper(loginUserController));
-router.post('/logout', ctrlWrapper(logOutController));
 router.post('/refresh', ctrlWrapper(refreshUserSessionController));
+router.post('/logout', ctrlWrapper(logOutController));
 
 export default router;
