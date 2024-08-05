@@ -61,7 +61,7 @@ export const refreshUsersSession = async ({ refreshToken, userId }) => {
     refreshToken,
   });
 
-  return await Session.create(newSession);
+  return Session.create(newSession);
 };
 
 
