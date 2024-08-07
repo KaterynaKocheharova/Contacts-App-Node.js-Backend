@@ -1,10 +1,19 @@
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
+import jwt from 'jsonwebtoken';
+import path from 'node:path';
+import fs from 'node:fs/promises';
+import Handlebars from 'handlebars';
+import { env } from '../utils/env.js';
 import { User } from '../db/models/user.js';
-import { Session} from '../db/models/session.js';
+import { Session } from '../db/models/session.js';
 import { createSession } from './utils.js';
+import { sendEmail } from '../utils/sendMail.js';
+import { SMTP } from '../constants/index.js';
+import { TEMPLATES_DIR } from '../constants/index.js';
 
 // ======================================= REGISTER
+
 export const registerUser = async (userData) => {
   const alreadyExistingUser = await User.findOne({ email: userData.email });
   if (alreadyExistingUser !== null) {
@@ -64,9 +73,50 @@ export const refreshUsersSession = async ({ refreshToken, userId }) => {
   return Session.create(newSession);
 };
 
-
 // ===================================== LOGOUT
 
-export const logOut = (sessionId) =>
-  Session.deleteOne({ _id: sessionId });
+export const logOut = (sessionId) => Session.deleteOne({ _id: sessionId });
 
+// ==================================== REQUEST RESET PASSWORD
+
+export const requestResetPassword = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const resetToken = jwt.sign(
+    {
+      sub: user._id,
+      email,
+    },
+    env('JWT_SECRET'),
+    {
+      expiresIn: '15m',
+    },
+  );
+
+  const resetPasswordTemplatePath = path.join(
+    TEMPLATES_DIR,
+    'reset-password-email.html',
+  );
+
+  const resetPasswordTemplateSource = (
+    await fs.readFile(resetPasswordTemplatePath)
+  ).toString();
+
+  const resetPasswordTemplate = Handlebars.compile(resetPasswordTemplateSource);
+  const html = resetPasswordTemplate({
+    name: user.name,
+    link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
+  });
+
+  const messageContent = {
+    from: env(SMTP.SMTP_FROM),
+    to: email,
+    subject: 'Reset password',
+    html,
+  };
+
+  await sendEmail(messageContent);
+};
