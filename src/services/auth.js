@@ -120,3 +120,35 @@ export const requestResetPassword = async (email) => {
 
   await sendEmail(messageContent);
 };
+
+// ============================== RESET PASSWORD
+
+export const resetPassword = async (userData) => {
+  const { password, token } = userData;
+
+  let entries;
+
+  try {
+    entries = jwt.verify(token, env('JWT_SECRET'));
+    console.log(entries);
+  } catch (error) {
+    if (error instanceof Error) throw createHttpError(401, error.message);
+    throw error;
+  }
+
+  const user = await User.findOne({
+    _id: entries.sub,
+    email: entries.email,
+  });
+
+  if (!user) throw createHttpError(404, 'User not found');
+
+  const encryptedPassword = await bcrypt.hash(password, 10);
+
+  await User.updateOne(
+    {
+      _id: user._id,
+    },
+    { password: encryptedPassword },
+  );
+};

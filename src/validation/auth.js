@@ -28,10 +28,14 @@ export const registerUserSchema = Joi.object({
 export const loginUserSchema = Joi.object(authSchemaBase);
 
 export const requestResetPasswordSchema = Joi.object({
-  email: Joi.string().email().required().messages({
-    'any.required': 'Email is required',
-    'string.base': 'Email should me a string',
-    'string.empty': "Email shouldn't be an empty string",
-    'sting.email': 'Email should have email structure',
+  email: authSchemaBase.email,
+});
+
+export const resetPasswordSchema = Joi.object({
+  password: authSchemaBase.password,
+  token: Joi.string().required().messages({
+    'any.required': 'Token is required',
+    'string.base': 'Token should be a string',
+    'string.empty': "Token shouldn't be an empty string",
   }),
 });
