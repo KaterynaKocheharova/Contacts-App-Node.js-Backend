@@ -27,7 +27,7 @@ export const registerUserSchema = Joi.object({
 
 export const loginUserSchema = Joi.object(authSchemaBase);
 
-export const requestResetPasswordSchema = Joi.object({
+export const requestResetEmailSchema = Joi.object({
   email: authSchemaBase.email,
 });
 

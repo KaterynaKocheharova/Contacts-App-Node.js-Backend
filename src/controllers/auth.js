@@ -3,7 +3,7 @@ import {
   loginUser,
   logOut,
   refreshUsersSession,
-  requestResetPassword,
+  requestResetEmail,
   resetPassword,
 } from '../services/auth.js';
 import { setupCookies } from './utils.js';
@@ -83,9 +83,9 @@ export const logOutController = async (req, res) => {
 
 // ============================ REQUEST RESET PASSWORD
 
-export const requestResetPasswordController = async (req, res) => {
+export const requestResetEmailController = async (req, res) => {
   const { email } = req.body;
-  await requestResetPassword(email);
+  await requestResetEmail(email);
   res.status(200).json({
     status: 200,
     message: 'Reset password email successfully sent',

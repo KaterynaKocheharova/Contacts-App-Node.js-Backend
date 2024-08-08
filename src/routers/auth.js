@@ -4,7 +4,7 @@ import { validateBody } from '../middlewares/validateBody.js';
 import {
   registerUserSchema,
   loginUserSchema,
-  requestResetPasswordSchema,
+  requestResetEmailSchema,
   resetPasswordSchema
 } from '../validation/auth.js';
 import {
@@ -12,7 +12,7 @@ import {
   loginUserController,
   logOutController,
   refreshUserSessionController,
-  requestResetPasswordController,
+  requestResetEmailController,
   resetPasswordController
 } from '../controllers/auth.js';
 
@@ -36,8 +36,8 @@ router.post('/logout', ctrlWrapper(logOutController));
 router.post(
   '/request-reset-password',
   jsonParser,
-  validateBody(requestResetPasswordSchema),
-  ctrlWrapper(requestResetPasswordController),
+  validateBody(requestResetEmailSchema),
+  ctrlWrapper(requestResetEmailController),
 );
 router.post(
   '/reset-password',

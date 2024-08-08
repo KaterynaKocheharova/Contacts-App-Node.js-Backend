@@ -79,7 +79,7 @@ export const logOut = (sessionId) => Session.deleteOne({ _id: sessionId });
 
 // ==================================== REQUEST RESET PASSWORD
 
-export const requestResetPassword = async (email) => {
+export const requestResetEmail = async (email) => {
   const user = await User.findOne({ email });
   if (!user) {
     throw createHttpError(404, 'User not found');
