@@ -109,7 +109,7 @@ export const deleteContact = async (contactId, userId) => {
   return data;
 };
 
-export const upsertContact = async (id, payload, options = {}, userId) => {
+export const upsertContact = async (id, userId, payload, options = {}) => {
   const rawData = await ContactsCollection.findOneAndUpdate(
     { _id: id, userId },
     payload,
