@@ -9,13 +9,21 @@ import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
 export const findContactsController = async (req, res) => {
   const userId = req.user._id;
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortOrder, sortBy } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
-  const contacts = await findContacts({ page, perPage, sortOrder, sortBy, filter, userId });
+  const contacts = await findContacts({
+    page,
+    perPage,
+    sortOrder,
+    sortBy,
+    filter,
+    userId,
+  });
 
   res.status(200).json({
     status: 200,
@@ -44,7 +52,7 @@ export const createContactController = async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     isFavorite: req.body.isFavorite,
     type: req.body.contactType,
-    userId: req.user._id
+    userId: req.user._id,
   });
   res.status(201).send({
     status: 201,
@@ -74,7 +82,7 @@ export const upsertContactController = async (req, res) => {
       phoneNumber: req.body.phoneNumber,
       isFavorite: req.body.isFavorite,
       type: req.body.contactType,
-      userId: req.user._id
+      userId: req.user._id,
     },
     {
       upsert: true,
@@ -93,7 +101,10 @@ export const upsertContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const photo = req.file;
-  console.log(photo);
+  let photoURL;
+  if (photo) {
+    photoURL = await saveFileToUploadDir(photo);
+  }
   const userId = req.user.id;
   const { contactId } = req.params;
   const patchedContact = await upsertContact(contactId, userId, {
@@ -101,7 +112,8 @@ export const patchContactController = async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     isFavorite: req.body.isFavorite,
     type: req.body.contactType,
-    userId: req.user._id
+    userId: req.user._id,
+    photo: photoURL
   });
   if (!patchedContact) {
     throw createHttpError(404, 'Contact not found');
