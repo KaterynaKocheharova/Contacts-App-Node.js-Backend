@@ -1,5 +1,13 @@
 import path from 'node:path';
 
+// ======================================== CLOUDINARY
+
+export const CLOUDINARY = {
+  CLOUD_NAME: 'CLOUD_NAME',
+  API_KEY: 'API_KEY',
+  API_SECRET: 'API_SECRET',
+};
+
 // ========================================= IMAGES FOLDERS
 
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), "temp");

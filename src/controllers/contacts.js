@@ -10,6 +10,8 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { env } from '../utils/env.js';
 
 export const findContactsController = async (req, res) => {
   const userId = req.user._id;
@@ -102,9 +104,15 @@ export const upsertContactController = async (req, res) => {
 export const patchContactController = async (req, res) => {
   const photo = req.file;
   let photoURL;
+
   if (photo) {
-    photoURL = await saveFileToUploadDir(photo);
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoURL = await saveFileToCloudinary(photo);
+    } else {
+      photoURL = await saveFileToUploadDir(photo);
+    }
   }
+
   const userId = req.user.id;
   const { contactId } = req.params;
   const patchedContact = await upsertContact(contactId, userId, {
@@ -113,7 +121,7 @@ export const patchContactController = async (req, res) => {
     isFavorite: req.body.isFavorite,
     type: req.body.contactType,
     userId: req.user._id,
-    photo: photoURL
+    photo: photoURL,
   });
   if (!patchedContact) {
     throw createHttpError(404, 'Contact not found');
