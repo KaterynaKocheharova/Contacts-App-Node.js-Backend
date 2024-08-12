@@ -103,12 +103,15 @@ export const upsertContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const photo = req.file;
+  console.log(photo);
   let photoURL;
 
   if (photo) {
     if (env('ENABLE_CLOUDINARY') === 'true') {
+      "saving to cloudinary";
       photoURL = await saveFileToCloudinary(photo);
     } else {
+      "saving to upload dir";
       photoURL = await saveFileToUploadDir(photo);
     }
   }
