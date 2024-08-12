@@ -40,7 +40,7 @@ export const loginUser = async (userData) => {
     throw createHttpError(401, 'Incorrect password');
   }
 
-  Session.deleteOne({
+  await Session.deleteOne({
     userId: user._id,
   });
 
@@ -66,7 +66,7 @@ export const refreshUsersSession = async ({ refreshToken, userId }) => {
 
   const newSession = createSession(session.userId);
   await Session.deleteOne({
-    _id: userId,
+    userId,
     refreshToken,
   });
 
