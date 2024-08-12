@@ -92,7 +92,7 @@ export const requestResetEmail = async (email) => {
     },
     env('JWT_SECRET'),
     {
-      expiresIn: '15m',
+      expiresIn: '5m',
     },
   );
 
@@ -118,7 +118,14 @@ export const requestResetEmail = async (email) => {
     html,
   };
 
-  await sendEmail(messageContent);
+  try {
+    await sendEmail(messageContent);
+  } catch {
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
+  }
 };
 
 // ============================== RESET PASSWORD
@@ -130,9 +137,9 @@ export const resetPassword = async (userData) => {
 
   try {
     entries = jwt.verify(token, env('JWT_SECRET'));
-    console.log(entries);
   } catch (error) {
-    if (error instanceof Error) throw createHttpError(401, error.message);
+    if (error instanceof Error)
+      throw createHttpError(401, 'Token is expired or invalid');
     throw error;
   }
 
@@ -144,6 +151,10 @@ export const resetPassword = async (userData) => {
   if (!user) throw createHttpError(404, 'User not found');
 
   const encryptedPassword = await bcrypt.hash(password, 10);
+
+  // await Session.deleteOne({
+  //   userId: user._id,
+  // });
 
   await User.updateOne(
     {

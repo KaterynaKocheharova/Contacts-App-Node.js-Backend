@@ -12,6 +12,7 @@ import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { env } from '../utils/env.js';
+import { savePhoto } from '../utils/savePhoto.js';
 
 export const findContactsController = async (req, res) => {
   const userId = req.user._id;
@@ -48,13 +49,17 @@ export const findContactByIdController = async (req, res) => {
   });
 };
 
+// ========================================== PHOTO FEATURE FOR CREATE CONTACT
+
 export const createContactController = async (req, res) => {
+  const photoURL = await savePhoto(req.file);
   const newContact = await createContact({
     name: req.body.name,
     phoneNumber: req.body.phoneNumber,
     isFavorite: req.body.isFavorite,
     type: req.body.contactType,
     userId: req.user._id,
+    photo: photoURL,
   });
   res.status(201).send({
     status: 201,
@@ -72,6 +77,8 @@ export const deleteContactController = async (req, res) => {
   }
   res.status(204).send();
 };
+
+// ============================ PHOTO FEATURE FOR UPSERT CONTACT
 
 export const upsertContactController = async (req, res) => {
   const userId = req.user._id;
@@ -108,10 +115,10 @@ export const patchContactController = async (req, res) => {
 
   if (photo) {
     if (env('ENABLE_CLOUDINARY') === 'true') {
-      "saving to cloudinary";
+      ('saving to cloudinary');
       photoURL = await saveFileToCloudinary(photo);
     } else {
-      "saving to upload dir";
+      ('saving to upload dir');
       photoURL = await saveFileToUploadDir(photo);
     }
   }
