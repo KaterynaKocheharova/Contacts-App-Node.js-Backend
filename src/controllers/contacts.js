@@ -9,9 +9,6 @@ import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
-import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
-import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
-import { env } from '../utils/env.js';
 import { savePhoto } from '../utils/savePhoto.js';
 
 export const findContactsController = async (req, res) => {
@@ -49,8 +46,6 @@ export const findContactByIdController = async (req, res) => {
   });
 };
 
-// ========================================== PHOTO FEATURE FOR CREATE CONTACT
-
 export const createContactController = async (req, res) => {
   const photoURL = await savePhoto(req.file);
   const newContact = await createContact({
@@ -78,9 +73,8 @@ export const deleteContactController = async (req, res) => {
   res.status(204).send();
 };
 
-// ============================ PHOTO FEATURE FOR UPSERT CONTACT
-
 export const upsertContactController = async (req, res) => {
+  const photoURL = await savePhoto(req.file);
   const userId = req.user._id;
   const { contactId } = req.params;
   const upsertedContact = await upsertContact(
@@ -92,6 +86,7 @@ export const upsertContactController = async (req, res) => {
       isFavorite: req.body.isFavorite,
       type: req.body.contactType,
       userId: req.user._id,
+      photoURL: photoURL
     },
     {
       upsert: true,
@@ -109,20 +104,7 @@ export const upsertContactController = async (req, res) => {
 };
 
 export const patchContactController = async (req, res) => {
-  const photo = req.file;
-  console.log(photo);
-  let photoURL;
-
-  if (photo) {
-    if (env('ENABLE_CLOUDINARY') === 'true') {
-      ('saving to cloudinary');
-      photoURL = await saveFileToCloudinary(photo);
-    } else {
-      ('saving to upload dir');
-      photoURL = await saveFileToUploadDir(photo);
-    }
-  }
-
+  const photoURL = await savePhoto(req.file);
   const userId = req.user.id;
   const { contactId } = req.params;
   const patchedContact = await upsertContact(contactId, userId, {
