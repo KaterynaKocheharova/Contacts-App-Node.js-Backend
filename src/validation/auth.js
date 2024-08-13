@@ -39,3 +39,7 @@ export const resetPasswordSchema = Joi.object({
     'string.empty': "Token shouldn't be an empty string",
   }),
 });
+
+export const loginOrSignUpWithGoogleSchema = Joi.object({
+  code: Joi.string().required(),
+});

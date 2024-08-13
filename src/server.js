@@ -8,3 +8,4 @@ export const setUpServer = () => {
     logger.info(`Server is running on port ${PORT}`);
   });
 };
+
