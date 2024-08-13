@@ -130,8 +130,8 @@ export const loginOrSignupWithGoogleController = async (req, res) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully logged in via Google OAuth!',
-    // data: {
-    //   accessToken: session.accessToken,
-    // },
+    data: {
+      // accessToken: session.accessToken,
+    },
   });
 };

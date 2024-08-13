@@ -12,8 +12,8 @@ import { sendEmail } from '../utils/sendMail.js';
 import { SMTP } from '../constants/index.js';
 import { TEMPLATES_DIR } from '../constants/index.js';
 import { validateCode } from '../utils/googleOAuth2.js';
-import { randomBytes } from 'node:crypto';
-import { getFullNameFromGoogleTokenPayload } from '../utils/googleOAuth2.js';
+// import { randomBytes } from 'node:crypto';
+// import { getFullNameFromGoogleTokenPayload } from '../utils/googleOAuth2.js';
 
 // ======================================= REGISTER
 

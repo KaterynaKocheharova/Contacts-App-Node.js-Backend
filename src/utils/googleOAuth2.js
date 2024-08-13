@@ -4,7 +4,7 @@ import { readFile } from 'fs/promises';
 import { env } from './env.js';
 import createHttpError from 'http-errors';
 
-const PATH_JSON = path.join(path.resolve('google-oauth.json'));
+const PATH_JSON = path.join(process.cwd(), 'google-oauth.json');
 const authConfig = JSON.parse(await readFile(PATH_JSON));
 
 const googleOAuthClient = new OAuth2Client({
@@ -22,27 +22,28 @@ export const generateAuthUrl = () =>
   });
 
 export const validateCode = async (code) => {
-  console.log(code);
   const response = await googleOAuthClient.getToken(code);
   console.log(response);
-  // if (!response.tokens.id_token) {
-  //   throw createHttpError(401, 'Anauthorized');
-  // }
-  // const ticket = await googleOAuthClient.verifyIdToken({
-  //   id_token: response.tokens.id_token,
-  // });
+  if (!response.tokens.id_token) {
+    throw createHttpError(401, 'Anauthorized');
+  }
+  const ticket = await googleOAuthClient.verifyIdToken({
+    id_token: response.tokens.id_token,
+  });
+
+  console.log(ticket);
 
   // return ticket;
 };
 
-export const getFullNameFromGoogleTokenPayload = (payload) => {
-  let fullName = 'Guest';
+// export const getFullNameFromGoogleTokenPayload = (payload) => {
+//   let fullName = 'Guest';
 
-  if (payload.given_name && payload.family_name) {
-    fullName = `${payload.given_name} ${payload.family_name}`;
-  } else if (payload.given_name) {
-    fullName = payload.given_name;
-  }
+//   if (payload.given_name && payload.family_name) {
+//     fullName = `${payload.given_name} ${payload.family_name}`;
+//   } else if (payload.given_name) {
+//     fullName = payload.given_name;
+//   }
 
-  return fullName;
-};
+//   return fullName;
+// };
