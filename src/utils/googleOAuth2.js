@@ -24,26 +24,27 @@ export const generateAuthUrl = () =>
 export const validateCode = async (code) => {
   const response = await googleOAuthClient.getToken(code);
   console.log(response);
+
   if (!response.tokens.id_token) {
     throw createHttpError(401, 'Anauthorized');
   }
   const ticket = await googleOAuthClient.verifyIdToken({
-    id_token: response.tokens.id_token,
+    idToken: response.tokens.id_token,
   });
 
   console.log(ticket);
 
-  // return ticket;
+  return ticket;
 };
 
-// export const getFullNameFromGoogleTokenPayload = (payload) => {
-//   let fullName = 'Guest';
+export const getFullNameFromGoogleTokenPayload = (payload) => {
+  let fullName = 'Guest';
 
-//   if (payload.given_name && payload.family_name) {
-//     fullName = `${payload.given_name} ${payload.family_name}`;
-//   } else if (payload.given_name) {
-//     fullName = payload.given_name;
-//   }
+  if (payload.given_name && payload.family_name) {
+    fullName = `${payload.given_name} ${payload.family_name}`;
+  } else if (payload.given_name) {
+    fullName = payload.given_name;
+  }
 
-//   return fullName;
-// };
+  return fullName;
+};

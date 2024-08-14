@@ -12,8 +12,8 @@ import { sendEmail } from '../utils/sendMail.js';
 import { SMTP } from '../constants/index.js';
 import { TEMPLATES_DIR } from '../constants/index.js';
 import { validateCode } from '../utils/googleOAuth2.js';
-// import { randomBytes } from 'node:crypto';
-// import { getFullNameFromGoogleTokenPayload } from '../utils/googleOAuth2.js';
+import { randomBytes } from 'node:crypto';
+import { getFullNameFromGoogleTokenPayload } from '../utils/googleOAuth2.js';
 
 // ======================================= REGISTER
 
@@ -167,25 +167,25 @@ export const resetPassword = async (userData) => {
   );
 };
 
-// ========================== LOGIN OR SSIGNUP WITH GOOGLE
+// ========================== LOGIN OR SIGNUP WITH GOOGLE
 
 export const loginOrSignupWithGoogle = async (code) => {
   await validateCode(code);
-  // const loginTicket = await validateCode(code);
-  // const payload = loginTicket.getPaylod();
-  // if (!payload) throw createHttpError(401);
+  const loginTicket = await validateCode(code);
+  const payload = loginTicket.getPaylod();
+  if (!payload) throw createHttpError(401);
 
-  // let user = User.findOne({ email: payload.email });
-  // if (!user) {
-  //   const password = bcrypt.hash(randomBytes(10), 10);
-  //   user = User.create({
-  //     email: payload.email,
-  //     password,
-  //     name: getFullNameFromGoogleTokenPayload(payload),
-  //   });
-  // }
+  let user = User.findOne({ email: payload.email });
+  if (!user) {
+    const password = bcrypt.hash(randomBytes(10), 10);
+    user = User.create({
+      email: payload.email,
+      password,
+      name: getFullNameFromGoogleTokenPayload(payload),
+    });
+  }
 
-  // const newSession = createSession(user._id);
+  const newSession = createSession(user._id);
 
-  // return await Session.create(newSession);
+  return await Session.create(newSession);
 };
