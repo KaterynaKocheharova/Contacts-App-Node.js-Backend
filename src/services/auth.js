@@ -170,7 +170,6 @@ export const resetPassword = async (userData) => {
 // ========================== LOGIN OR SIGNUP WITH GOOGLE
 
 export const loginOrSignupWithGoogle = async (code) => {
-  await validateCode(code);
   const loginTicket = await validateCode(code);
   const payload = loginTicket.getPaylod();
   if (!payload) throw createHttpError(401);
