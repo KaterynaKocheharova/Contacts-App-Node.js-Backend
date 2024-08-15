@@ -22,6 +22,7 @@ export const generateAuthUrl = () =>
   });
 
 export const validateCode = async (code) => {
+  console.log(code);
   const response = await googleOAuthClient.getToken(code);
   console.log(response);
 
@@ -31,9 +32,7 @@ export const validateCode = async (code) => {
   const ticket = await googleOAuthClient.verifyIdToken({
     idToken: response.tokens.id_token,
   });
-
   console.log(ticket);
-
   return ticket;
 };
 
