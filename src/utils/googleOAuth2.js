@@ -22,9 +22,7 @@ export const generateAuthUrl = () =>
   });
 
 export const validateCode = async (code) => {
-  console.log(code);
   const response = await googleOAuthClient.getToken(code);
-  console.log(response);
 
   if (!response.tokens.id_token) {
     throw createHttpError(401, 'Anauthorized');
@@ -32,7 +30,6 @@ export const validateCode = async (code) => {
   const ticket = await googleOAuthClient.verifyIdToken({
     idToken: response.tokens.id_token,
   });
-  console.log(ticket);
   return ticket;
 };
 
