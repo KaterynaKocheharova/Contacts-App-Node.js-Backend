@@ -23,12 +23,13 @@ export const logger = pino({
 
 const app = express();
 app.use('/uploads', express.static(UPLOAD_DIR));
+app.use('/api-docs', swaggerDocs());
 app.use(pinoMiddleware({ logger }));
 app.use(cors());
 app.use(cookieParser());
 app.use(routers);
 app.use(notFoundHandler);
 app.use(errorHandler);
-app.use('/api-docs', swaggerDocs());
+
 
 export default app;
