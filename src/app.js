@@ -5,8 +5,9 @@ import cors from 'cors';
 import routers from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { errorHandler } from './middlewares/errorHandler.js';
-import {notFoundHandler} from "./middlewares/notFoundHandler.js";
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { UPLOAD_DIR } from './constants/index.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 export const logger = pino({
   transport: {
@@ -21,12 +22,13 @@ export const logger = pino({
 });
 
 const app = express();
-app.use("/uploads", express.static(UPLOAD_DIR));
+app.use('/uploads', express.static(UPLOAD_DIR));
 app.use(pinoMiddleware({ logger }));
 app.use(cors());
 app.use(cookieParser());
 app.use(routers);
 app.use(notFoundHandler);
 app.use(errorHandler);
+app.use('/api-docs', swaggerDocs());
 
 export default app;

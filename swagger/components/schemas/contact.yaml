@@ -1,5 +1,3 @@
-# swagger/components/schemas/contact.yaml
-
 type: object
 required:
   - _id
@@ -10,17 +8,16 @@ properties:
   _id:
     description: "Contact's id"
     type: string
-    example: 65e4decdd286b30065d54af9
+    example: '65e4decdd286b30065d54af9'
   name:
     description: "Contact's name"
     type: string
     example: 'John Doe'
   phoneNumber:
-    description: "Contact's phpne number"
-    type: number
-    example: +380959966297
+    description: "Contact's phone number"
+    type: string
+    example: '+380959966297'
   userId:
     description: "Contact's user's id"
     type: string
-    example:65e4decdd286b30065d54af9
-  
+    example: '65e4decdd286b30065d54af9'
