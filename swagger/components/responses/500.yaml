@@ -1,0 +1,19 @@
+description: Server error
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - name
+        - data
+      properties:
+        status:
+          type: integer
+          example: 401
+        name:
+          type: string
+          example: Something went wrong
+        data:
+          type: string
+          example: 'Cannot read properties of undefined'
