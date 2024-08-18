@@ -14,7 +14,6 @@ requestBody:
         required:
           - name
           - phoneNumber
-          - userId
         properties:
           name:
             description: "Contact's name"
@@ -24,10 +23,6 @@ requestBody:
             description: "Contact's number"
             type: number
             example: +380955566333
-          userId:
-            description: "Contact's owner's id"
-            type: string
-            example: 65e4decdd286b30065d54af9
 responses:
   '201':
     description: Creates a contact

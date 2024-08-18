@@ -195,8 +195,7 @@
                 "type": "object",
                 "required": [
                   "name",
-                  "phoneNumber",
-                  "userId"
+                  "phoneNumber"
                 ],
                 "properties": {
                   "name": {
@@ -208,11 +207,6 @@
                     "description": "Contact's number",
                     "type": "number",
                     "example": 380955566333
-                  },
-                  "userId": {
-                    "description": "Contact's owner's id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
                   }
                 }
               }
@@ -308,6 +302,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -461,6 +458,76 @@
           }
         }
       }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register user",
+        "operationId": "registerUser",
+        "description": "Register user with email and password'",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "example@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "anfjv74"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully registered user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -477,7 +544,11 @@
           "_id",
           "name",
           "phoneNumber",
-          "userId"
+          "userId",
+          "email",
+          "isFavourite",
+          "contactType",
+          "photo"
         ],
         "properties": {
           "_id": {
@@ -499,6 +570,62 @@
             "description": "Contact's user's id",
             "type": "string",
             "example": "65e4decdd286b30065d54af9"
+          },
+          "email": {
+            "description": "Contact's email",
+            "type": "string",
+            "example": "example@gmail.com"
+          },
+          "isFavourite": {
+            "description": "Specifies if the contact is in favourite list of the user",
+            "type": "boolean",
+            "example": true
+          },
+          "contactType": {
+            "description": "Contact's type",
+            "type": "string",
+            "enum": [
+              "work",
+              "home",
+              "personal"
+            ],
+            "example": "home"
+          },
+          "photo": {
+            "description": "Contact's photo",
+            "type": "string",
+            "example": "https://res.cloudinary.com/dwabpyoqb/image/upload/v1723470810/n8pnti9y"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "example": "+380959966297"
+          },
+          "password": {
+            "description": "User's password",
+            "type": "string",
+            "example": "65e4decdd2f9"
           }
         }
       }
@@ -512,7 +639,6 @@
               "type": "object",
               "required": [
                 "status",
-                "message",
                 "data"
               ],
               "properties": {
@@ -520,21 +646,9 @@
                   "type": "integer",
                   "example": 401
                 },
-                "message": {
-                  "type": "string",
-                  "example": "UnauthorizedError"
-                },
                 "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Access token expired"
-                    }
-                  }
+                  "type": "string",
+                  "example": "Access token expired"
                 }
               }
             }
@@ -549,7 +663,6 @@
               "type": "object",
               "required": [
                 "status",
-                "message",
                 "data"
               ],
               "properties": {
@@ -557,21 +670,9 @@
                   "type": "integer",
                   "example": 404
                 },
-                "message": {
-                  "type": "string",
-                  "example": "NotFoundError"
-                },
                 "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Not found contact"
-                    }
-                  }
+                  "type": "string",
+                  "example": "Contact not found"
                 }
               }
             }
