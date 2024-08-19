@@ -1,4 +1,3 @@
-
 tags:
   - Contacts
 summary: Patch contact by id
@@ -18,10 +17,6 @@ requestBody:
     multipart/form-data:
       schema:
         type: object
-        required:
-          - name
-          - phoneNumber
-          - userId
         properties:
           name:
             description: "Contact's name"
@@ -35,6 +30,23 @@ requestBody:
             description: "Contact's owner's id"
             type: string
             example: 65e4decdd286b30065d54af9
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'example@gmail.com'
+          isFavourite:
+            description: 'Specifies if the contact is in favourite list of the user'
+            type: boolean
+            example: true
+          contactType:
+            description: "Contact's type"
+            type: string
+            enum: ['work', 'home', 'personal']
+            example: home
+          photo:
+            description: "Contact's photo"
+            type: string
+            example: https://res.cloudinary.com/dwabpyoqb/image/upload/v1723470810/n8pnti9y
 responses:
   '200':
     description: 'Patched contact by id'
@@ -52,10 +64,11 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully patched contact with id 65ca67e7ae7f10c88b598384!
+              example: Successfully patched the contact !
             data:
               type: object
               $ref: '../../../components/schemas/contact.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'
-
+  '401':
+    $ref: '../../../components/responses/401.yaml'

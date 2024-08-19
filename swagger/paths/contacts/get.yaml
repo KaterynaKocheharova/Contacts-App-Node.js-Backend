@@ -1,10 +1,9 @@
-#/swagger/paths/students/get.yaml
 
 tags:
   - Contacts
 summary: Get list of contacts
 operationId: getContacts
-description: 'Get list of contacts with this endpoint'
+description: 'Get list of contacts'
 security:
   - bearerAuth: []
 parameters:
@@ -23,7 +22,7 @@ parameters:
     schema:
       type: string
       example: 'name'
-    description: "All contact's fields can be mentioned. Default value - _id"
+    description: "All contact's fields can be mentioned"
   - in: query
     name: sortOrder
     schema:
@@ -43,7 +42,7 @@ parameters:
       example: 'work'
 responses:
   '200':
-    description: Successfully found contacts!
+    description: Finds contacts
     content:
       application/json:
         schema:
