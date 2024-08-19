@@ -22,10 +22,6 @@ requestBody:
             description: "Contact's number"
             type: number
             example: +380955566333
-          userId:
-            description: "Contact's user's id"
-            type: string
-            example: '65e4decdd286b30065d54af9'
           email:
             description: "Contact's email"
             type: string
@@ -64,7 +60,11 @@ responses:
             data:
               type: object
               $ref: '../../components/schemas/contact.yaml'
+  '400':
+    $ref: '../../components/responses/400.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
   '404':
     $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

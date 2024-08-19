@@ -1,19 +1,15 @@
-description: Server error
+description: Bad Request Error
 content:
   application/json:
     schema:
       type: object
       required:
         - status
-        - name
         - data
       properties:
         status:
           type: integer
-          example: 500
-        name:
-          type: string
-          example: Something went wrong
+          example: 400
         data:
           type: string
-          example: 'Unexpected token in json'
+          example: 'Bad Request'

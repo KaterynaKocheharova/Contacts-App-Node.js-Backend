@@ -16,16 +16,15 @@ export const createContactValidationSchema = Joi.object({
   email: Joi.string().email().messages({
     'string.base': 'Email should be a string',
   }),
-  isFavorite: Joi.boolean().messages({
+  isFavourite: Joi.boolean().messages({
     'string.base': 'isFavorite should be a string',
   }),
   contactType: Joi.string().valid('work', 'home', 'personal').messages({
     'any.only': 'Contact should be of type work, home, or personal',
   }),
-  // userId: Joi.string().required().messages({
-  //   'string.base': 'UserId should be a string',
-  //   'any.required': 'Username is required',
-  // }),
+  photo: Joi.string().messages({
+    'string': 'Photo should be a string',
+  }),
 });
 
 export const updateContactValidationSchema = Joi.object({
@@ -44,14 +43,14 @@ export const updateContactValidationSchema = Joi.object({
   email: Joi.string().email().messages({
     'string.base': 'Email should be a string',
   }),
-  isFavorite: Joi.boolean().messages({
+  isFavourite: Joi.boolean().messages({
     'string.base': 'isFavorite should be a string',
   }),
   contactType: Joi.string().valid('work', 'home', 'personal').messages({
     'any.only': 'Contact should be of type work, home, or personal',
   }),
-  // userId: Joi.string().required().messages({
-  //   'string.base': 'UserId should be a string',
-  //   'any.required': 'Username is required',
-  // }),
+  photo: Joi.string().messages({
+    'string': 'Photo should be a string',
+  }),
+
 });

@@ -35,7 +35,7 @@
         ],
         "summary": "Get list of contacts",
         "operationId": "getContacts",
-        "description": "Get list of contacts with this endpoint",
+        "description": "Get list of contacts",
         "security": [
           {
             "bearerAuth": []
@@ -65,7 +65,7 @@
               "type": "string",
               "example": "name"
             },
-            "description": "All contact's fields can be mentioned. Default value - _id"
+            "description": "All contact's fields can be mentioned"
           },
           {
             "in": "query",
@@ -103,7 +103,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully found contacts!",
+            "description": "Finds contacts",
             "content": {
               "application/json": {
                 "schema": {
@@ -180,7 +180,7 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Create contact",
+        "summary": "Create a contact",
         "operationId": "createContact",
         "description": "Create a contact with payload",
         "security": [
@@ -207,6 +207,31 @@
                     "description": "Contact's number",
                     "type": "number",
                     "example": 380955566333
+                  },
+                  "email": {
+                    "description": "Contact's email",
+                    "type": "string",
+                    "example": "example@gmail.com"
+                  },
+                  "isFavourite": {
+                    "description": "Specifies if the contact is in favourite list of the user",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "contactType": {
+                    "description": "Contact's type",
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ],
+                    "example": "home"
+                  },
+                  "photo": {
+                    "description": "Contact's photo",
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/dwabpyoqb/image/upload/v1723470810/n8pnti9y"
                   }
                 }
               }
@@ -245,6 +270,9 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -339,11 +367,6 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "name",
-                  "phoneNumber",
-                  "userId"
-                ],
                 "properties": {
                   "name": {
                     "description": "Contact's name",
@@ -355,10 +378,30 @@
                     "type": "number",
                     "example": 380955566333
                   },
-                  "userId": {
-                    "description": "Contact's owner's id",
+                  "email": {
+                    "description": "Contact's email",
                     "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
+                    "example": "example@gmail.com"
+                  },
+                  "isFavourite": {
+                    "description": "Specifies if the contact is in favourite list of the user",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "contactType": {
+                    "description": "Contact's type",
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ],
+                    "example": "home"
+                  },
+                  "photo": {
+                    "description": "Contact's photo",
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/dwabpyoqb/image/upload/v1723470810/n8pnti9y"
                   }
                 }
               }
@@ -384,7 +427,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully patched contact with id 65ca67e7ae7f10c88b598384!"
+                      "example": "Successfully patched the contact !"
                     },
                     "data": {
                       "type": "object",
@@ -394,6 +437,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -424,34 +470,11 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Get contact by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully deleted contact with id 65ca67e7ae7f10c88b598384!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/contact"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "Deletes a contact. No content"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
