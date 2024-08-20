@@ -43,7 +43,7 @@ export const loginUserController = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully logged in the user',
+    message: 'Successfully logged in the user!',
     data: {
       accessToken: session.accessToken,
     },
@@ -90,8 +90,7 @@ export const requestResetEmailController = async (req, res) => {
   await requestResetEmail(email);
   res.status(200).json({
     status: 200,
-    message: 'Reset password email has been successfully sent.',
-    data: {},
+    message: 'Reset password email has been successfully sent.'
   });
 };
 

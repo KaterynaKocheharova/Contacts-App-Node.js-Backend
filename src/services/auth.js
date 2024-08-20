@@ -33,14 +33,14 @@ export const loginUser = async (userData) => {
     email: userData.email,
   });
   if (!user) {
-    throw createHttpError(401, 'User with the give email not found.');
+    throw createHttpError(401, 'Anauthorized');
   }
   const isCorrectPassowrd = await bcrypt.compare(
     userData.password,
     user.password,
   );
   if (!isCorrectPassowrd) {
-    throw createHttpError(401, 'Incorrect password');
+    throw createHttpError(401, 'Anauthorized');
   }
 
   await Session.deleteOne({

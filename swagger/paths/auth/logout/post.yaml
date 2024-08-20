@@ -1,0 +1,18 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logoutUser
+description: makes user log out using cookie userId
+security: []
+parameters:
+  - in: cookie
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: '60c72b2f9b1d8e2f88e33e2a'
+responses:
+  '204':
+    description: User logged out. No content
+  '500':
+    $ref: '../../../components/responses/500.yaml'

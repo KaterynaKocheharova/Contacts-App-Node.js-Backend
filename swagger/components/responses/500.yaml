@@ -16,4 +16,4 @@ content:
           example: Something went wrong
         data:
           type: string
-          example: 'Unexpected token in json'
+          example: 'Unexpected token in json OR: Failed to send the email, please try again later.'

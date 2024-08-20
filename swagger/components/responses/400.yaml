@@ -13,3 +13,6 @@ content:
         data:
           type: string
           example: 'Bad Request'
+        errors:
+          type: string
+          example: 'Username is required'
