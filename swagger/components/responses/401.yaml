@@ -12,4 +12,4 @@ content:
           example: 401
         data:
           type: string
-          example: 'Unauthorized OR: access token expired'
+          example: 'Unauthorized OR: Access token expired'

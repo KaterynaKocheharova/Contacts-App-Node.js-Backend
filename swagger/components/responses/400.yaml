@@ -15,4 +15,4 @@ content:
           example: 'Bad Request'
         errors:
           type: string
-          example: 'Username is required'
+          example: 'Username/email/password etc. is required'
