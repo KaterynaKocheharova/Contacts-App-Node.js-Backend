@@ -3,7 +3,6 @@ required:
   - _id
   - name
   - email
-  - password
 properties:
   _id:
     description: "User's id"
@@ -17,7 +16,3 @@ properties:
     description: "User's email"
     type: string
     example: '+380959966297'
-  password:
-    description: "User's password"
-    type: string
-    example: '65e4decdd2f9'

@@ -30,7 +30,7 @@ paths:
       $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
   /auth/register:
     post:
-      $ref: ../swagger/paths/auth/register.yaml
+      $ref: ../swagger/paths/auth/register/post.yaml
 components:
   securitySchemes:
     bearerAuth:
