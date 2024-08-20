@@ -778,7 +778,7 @@
         ],
         "summary": "Send reset email",
         "operationId": "sendResetEmail",
-        "description": "User provides their email address and SMTP server sends them an email with the link that contains reset password token",
+        "description": "User provides their email address, and the SMTP server sends them an email with a link containing a reset password token.",
         "security": [],
         "requestBody": {
           "content": {
@@ -801,7 +801,7 @@
         },
         "responses": {
           "200": {
-            "description": "reset password email sent",
+            "description": "Reset password email sent",
             "content": {
               "application/json": {
                 "schema": {
@@ -825,10 +825,10 @@
             }
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/components/responses/404-2"
           },
           "500": {
-            "$ref": "#/components/responses/500"
+            "$ref": "#/components/responses/500-2"
           }
         }
       }
@@ -840,7 +840,7 @@
         ],
         "summary": "Reset password",
         "operationId": "resetPassword",
-        "description": "Reset user password after user sent their new password and reset token in the request",
+        "description": "reset user password with the token a user received in their email",
         "security": [],
         "requestBody": {
           "content": {
@@ -853,7 +853,7 @@
                 ],
                 "properties": {
                   "token": {
-                    "description": "Reset password toke the user has received via email",
+                    "description": "Reset token a user received",
                     "type": "string",
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmJhMGY5ZjY5N2JlZjUyZTQzZTk1OWMiLCJlbWFpbCI6ImtvdDQxOTAxQGdtYWlsLmNvbSIsImlhdCI6MTcyNDE2MTkzOSwiZXhwIjoxNzI0MTYyMjM5fQ.JnA36M2d5HQdeLYOI6N_A4EOercljjdpgasXck3U6zU"
                   },
@@ -869,7 +869,7 @@
         },
         "responses": {
           "200": {
-            "description": "password successfully changed",
+            "description": "password successfully reset",
             "content": {
               "application/json": {
                 "schema": {
@@ -896,7 +896,119 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/components/responses/404-2"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/get-oauth-url": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "get oauth url",
+        "operationId": "getOAuthUrl",
+        "description": "Get url for google authentification",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Google OAuth URL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully got Google OAuth url"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "https://accounts.google.com/o/oauth2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=email%20profile"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/confirm-oauth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "login or signup with google",
+        "operationId": "loginOrSignUpWithGoogle",
+        "description": "login or signup with google after receiving the code",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "description": "The code user received after confirming google auth",
+                    "type": "string",
+                    "example": "4/0AcvDMrAwqlE7x8emcwMTbR4eVwAOc7A1UkrJ-barFnQDKGR-ZYjgLhLKDsPGCVxI_HUB2A"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "logged in Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in via Google OAuth!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "+qlg5367xfOmhcezbHbyxgWZ4SERHv9TiwchRXJV"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -1021,7 +1133,7 @@
                 },
                 "errors": {
                   "type": "string",
-                  "example": "Username is required"
+                  "example": "Username/email/password etc. is required"
                 }
               }
             }
@@ -1045,7 +1157,7 @@
                 },
                 "data": {
                   "type": "string",
-                  "example": "Unauthorized OR: access token expired"
+                  "example": "Unauthorized"
                 }
               }
             }
@@ -1069,7 +1181,7 @@
                 },
                 "data": {
                   "type": "string",
-                  "example": "Contact not found OR: User not found"
+                  "example": "Contact not found"
                 }
               }
             }
@@ -1122,7 +1234,60 @@
                 },
                 "data": {
                   "type": "string",
-                  "example": "Unexpected token in json OR: Failed to send the email, please try again later."
+                  "example": "Unexpected token in json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-2": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "data": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500-2": {
+        "description": "Server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "name",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "Failed to send the email, please try again later (for resetting password)."
                 }
               }
             }

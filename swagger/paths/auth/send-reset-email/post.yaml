@@ -2,7 +2,7 @@ tags:
   - Auth
 summary: Send reset email
 operationId: sendResetEmail
-description: User provides their email address and SMTP server sends them an email with the link that contains reset password token
+description: User provides their email address, and the SMTP server sends them an email with a link containing a reset password token.
 security: []
 requestBody:
   content:
@@ -18,7 +18,7 @@ requestBody:
             example: 'example@gmail.com'
 responses:
   '200':
-    description: reset password email sent
+    description: Reset password email sent
     content:
       application/json:
         schema:
@@ -34,6 +34,6 @@ responses:
               type: string
               example: Reset password email has been successfully sent.
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: '../../../components/responses/userNotFound/404-2.yaml'
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: '../../../components/responses/failedToSendEmail/500-2.yaml'

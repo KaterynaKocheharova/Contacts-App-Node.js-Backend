@@ -1,0 +1,42 @@
+tags:
+  - Auth
+summary: login or signup with google
+operationId: loginOrSignUpWithGoogle
+description: login or signup with google after receiving the code
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            description: 'The code user received after confirming google auth'
+            type: string
+            example: '4/0AcvDMrAwqlE7x8emcwMTbR4eVwAOc7A1UkrJ-barFnQDKGR-ZYjgLhLKDsPGCVxI_HUB2A'
+responses:
+  '200':
+    description: logged in Successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in via Google OAuth!
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: +qlg5367xfOmhcezbHbyxgWZ4SERHv9TiwchRXJV
+  '500':
+    $ref: '../../../components/responses/500.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
