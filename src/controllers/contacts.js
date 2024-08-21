@@ -6,10 +6,10 @@ import {
   upsertContact,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
-import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import parsePaginationParams from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
-import { parseFilterParams } from '../utils/parseFilterParams.js';
-import { savePhoto } from '../utils/savePhoto.js';
+import parseFilterParams from '../utils/parseFilterParams.js';
+import savePhoto from '../utils/savePhoto.js';
 
 export const findContactsController = async (req, res) => {
   const userId = req.user._id;

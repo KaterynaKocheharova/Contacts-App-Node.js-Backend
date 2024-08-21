@@ -16,3 +16,5 @@ export const savePhoto = async (photo) => {
 
 return photoURL;
 };
+
+export default savePhoto;
