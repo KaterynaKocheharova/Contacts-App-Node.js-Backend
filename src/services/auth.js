@@ -15,6 +15,16 @@ import { validateCode } from '../utils/googleOAuth2.js';
 import { randomBytes } from 'node:crypto';
 import { getFullNameFromGoogleTokenPayload } from '../utils/googleOAuth2.js';
 
+// ====================================== MICROSERVICES
+
+// - FIND SESSION
+export const findSessionByToken = (token) =>
+  Session.findOne({
+    accessToken: token,
+  });
+// - FIND USER
+export const findUserById = (id) => User.findById(id);
+
 // ======================================= REGISTER
 
 export const registerUser = async (userData) => {
