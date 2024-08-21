@@ -1,45 +1,22 @@
 import path from 'node:path';
 
-// ======================================== SWAGGER
-
+// ======================================== ALL PATHS
+// - swagger
 export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
-
-// ======================================== CLOUDINARY
-
-export const CLOUDINARY = {
-  CLOUD_NAME: 'CLOUD_NAME',
-  API_KEY: 'API_KEY',
-  API_SECRET: 'API_SECRET',
-};
-
-// ========================================= IMAGES FOLDERS
-
+// - images folders
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), "temp");
 export const UPLOAD_DIR = path.join(process.cwd(), "uploads");
+// -templates
+export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
 
-// ========================================= TEMPLATES PATHS
 
-// export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
-export const TEMPLATES_DIR = path.resolve('src', 'templates');
-
-// ======================================== SMTP
-
-export const SMTP = {
-  SMTP_HOST: 'SMTP_HOST',
-  SMTP_PORT: 'SMTP_PORT',
-  SMTP_USER: 'SMTP_USER',
-  SMTP_PASSWORD: 'SMTP_PASSWORD',
-  SMTP_FROM: 'SMTP_FROM',
-};
-
-// ============================ SORTING
+// ======================================= PAGINATION / FILTRATION /  SORTING
+// - available sorting orders
 export const SORT_ORDER = {
   ASC: 'asc',
   DESC: 'desc',
 };
-
-// ========================== FILTRATION
-
+// - filtration is available for:
 export const keysOfContact = [
   'name',
   'phoneNumber',
@@ -48,13 +25,32 @@ export const keysOfContact = [
   'createdAt',
   'updatedAt',
 ];
-
-// ============================= CONTACT TYPES
-
 export const contactTypes = ['work', 'home', 'personal'];
 
-// ============================= NUMBERS
 
+// ============================= NUMBERS
+// - access token
 export const FIFTEEN_MINUTES = 15 * 60 * 1000;
+// - refresh token
 export const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+
+// ======================================== ENV VARIABLE NAMES
+// - cloudinary
+export const CLOUDINARY = {
+  CLOUD_NAME: 'CLOUD_NAME',
+  API_KEY: 'API_KEY',
+  API_SECRET: 'API_SECRET',
+};
+// - smtp
+export const SMTP = {
+  SMTP_HOST: 'SMTP_HOST',
+  SMTP_PORT: 'SMTP_PORT',
+  SMTP_USER: 'SMTP_USER',
+  SMTP_PASSWORD: 'SMTP_PASSWORD',
+  SMTP_FROM: 'SMTP_FROM',
+};
+
+
+
+
 

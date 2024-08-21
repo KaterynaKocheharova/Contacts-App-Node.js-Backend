@@ -1,12 +1,12 @@
 import express from 'express';
 import pino from 'pino';
 import pinoMiddleware from 'pino-http';
-import cors from 'cors';
 import routers from './routers/index.js';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { UPLOAD_DIR } from './constants/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import { UPLOAD_DIR } from './constants/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 export const logger = pino({
@@ -20,6 +20,15 @@ export const logger = pino({
     },
   },
 });
+
+// const corsOptions = {
+//   origin: 'https://example.com', // Allow only this origin
+//   methods: ['GET', 'POST'], // Allow only these methods
+//   allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+//   credentials: true // Allow cookies and authentication
+// };
+
+// app.use(cors(corsOptions));
 
 const app = express();
 app.use('/uploads', express.static(UPLOAD_DIR));
