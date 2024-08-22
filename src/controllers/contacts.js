@@ -1,5 +1,5 @@
 import {
-  findContacts,
+  getContacts,
   findContactById,
   createContact,
   deleteContact,
@@ -11,12 +11,12 @@ import parseSortParams from '../utils/parseSortParams.js';
 import parseFilterParams from '../utils/parseFilterParams.js';
 import savePhoto from '../utils/savePhoto.js';
 
-export const findContactsController = async (req, res) => {
+export const getContactsController = async (req, res) => {
   const userId = req.user._id;
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortOrder, sortBy } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
-  const contacts = await findContacts({
+  const contacts = await getContacts({
     page,
     perPage,
     sortOrder,

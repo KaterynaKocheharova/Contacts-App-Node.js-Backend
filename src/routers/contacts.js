@@ -1,6 +1,6 @@
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
-  findContactsController,
+  getContactsController,
   findContactByIdController,
   createContactController,
   deleteContactController,
@@ -21,7 +21,7 @@ const router = express.Router();
 const jsonParser = express.json();
 
 router.use(authenticate);
-router.get('/', ctrlWrapper(findContactsController));
+router.get('/', ctrlWrapper(getContactsController));
 router.get('/:contactId', isValidId, ctrlWrapper(findContactByIdController));
 router.post(
   '/',
