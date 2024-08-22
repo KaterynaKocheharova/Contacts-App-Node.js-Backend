@@ -38,7 +38,7 @@ requestBody:
           photo:
             description: "Contact's photo"
             type: string
-            example: 'https://res.cloudinary.com/dwabpyoqb/image/upload/v1723470810/n8pnti9y'
+            format: binary
 responses:
   '201':
     description: Creates a contact
