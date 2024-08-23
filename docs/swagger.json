@@ -1079,6 +1079,18 @@
             "description": "Contact's photo",
             "type": "string",
             "example": "https://res.cloudinary.com/dwabpyoqb/image/upload/v1723470810/n8pnti9y"
+          },
+          "createAt": {
+            "description": "Time when a contact was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-08-22T15:50:13.464Z"
+          },
+          "updatedAt": {
+            "description": "Time when a contact was last updated",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-08-22T15:50:13.464Z"
           }
         }
       },
@@ -1134,7 +1146,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Username/email/password etc. is required"
+                      "example": "Username is required"
                     }
                   }
                 }
@@ -1196,8 +1208,13 @@
                   "example": "Not Found"
                 },
                 "data": {
-                  "type": "string",
-                  "example": "Contact not found"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contact not found"
+                    }
+                  }
                 }
               }
             }

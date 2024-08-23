@@ -19,4 +19,4 @@ content:
           properties:
             message:
               type: string
-              example: 'Username/email/password etc. is required'
+              example: 'Username is required'
