@@ -10,6 +10,12 @@ content:
         status:
           type: integer
           example: 409
-        data:
+        name:
           type: string
-          example: 'Email in use'
+          example: Conflict
+        data:
+          type: object
+          properties:
+            error:
+             type: string
+             example: 'Email in use'

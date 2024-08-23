@@ -4,7 +4,7 @@ export const errorHandler = (error, req, res, next) => {
   if (error instanceof HttpError) {
     res.status(error.status).json({
       status: error.status,
-      message: error.name,
+      name: error.name,
       data: error
     });
     return;

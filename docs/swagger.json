@@ -1117,6 +1117,7 @@
               "type": "object",
               "required": [
                 "status",
+                "message",
                 "data"
               ],
               "properties": {
@@ -1124,13 +1125,18 @@
                   "type": "integer",
                   "example": 400
                 },
-                "data": {
+                "name": {
                   "type": "string",
                   "example": "Bad Request"
                 },
-                "errors": {
-                  "type": "string",
-                  "example": "Username/email/password etc. is required"
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Username/email/password etc. is required"
+                    }
+                  }
                 }
               }
             }
@@ -1152,9 +1158,18 @@
                   "type": "integer",
                   "example": 401
                 },
-                "data": {
+                "name": {
                   "type": "string",
-                  "example": "Unauthorized"
+                  "example": "AnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
                 }
               }
             }
@@ -1175,6 +1190,10 @@
                 "status": {
                   "type": "integer",
                   "example": 404
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Not Found"
                 },
                 "data": {
                   "type": "string",
@@ -1200,9 +1219,18 @@
                   "type": "integer",
                   "example": 409
                 },
-                "data": {
+                "name": {
                   "type": "string",
-                  "example": "Email in use"
+                  "example": "Conflict"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Email in use"
+                    }
+                  }
                 }
               }
             }

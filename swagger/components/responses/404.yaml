@@ -10,6 +10,9 @@ content:
         status:
           type: integer
           example: 404
+        name:
+          type: string
+          example: Not Found
         data:
           type: string
           example: 'Contact not found'

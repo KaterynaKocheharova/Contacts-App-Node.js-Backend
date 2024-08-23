@@ -10,6 +10,12 @@ content:
         status:
           type: integer
           example: 401
-        data:
+        name:
           type: string
-          example: 'Unauthorized'
+          example: "AnauthorizedError"
+        data:
+          type: object
+          properties:
+           message:
+            type: string
+            example: 'Unauthorized'
