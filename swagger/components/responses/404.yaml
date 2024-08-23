@@ -14,5 +14,8 @@ content:
           type: string
           example: Not Found
         data:
-          type: string
-          example: 'Contact not found'
+          type: object
+          properties:
+            message:   
+              type: string
+              example: 'Contact not found'
