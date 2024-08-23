@@ -1,7 +1,7 @@
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getContactsController,
-  findContactByIdController,
+  getContactByIdController,
   createContactController,
   deleteContactController,
   upsertContactController,
@@ -22,7 +22,7 @@ const jsonParser = express.json();
 
 router.use(authenticate);
 router.get('/', ctrlWrapper(getContactsController));
-router.get('/:contactId', isValidId, ctrlWrapper(findContactByIdController));
+router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdController));
 router.post(
   '/',
   upload.single('photo'),
@@ -30,11 +30,7 @@ router.post(
   validateBody(createContactValidationSchema),
   ctrlWrapper(createContactController),
 );
-router.delete(
-  '/:contactId',
-  isValidId,
-  ctrlWrapper(deleteContactController),
-);
+router.delete('/:contactId', isValidId, ctrlWrapper(deleteContactController));
 router.put(
   '/:contactId',
   upload.single('photo'),

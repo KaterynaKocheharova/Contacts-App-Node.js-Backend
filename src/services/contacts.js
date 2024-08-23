@@ -1,4 +1,3 @@
-
 import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
@@ -44,7 +43,7 @@ export const getContacts = async ({
   };
 };
 
-export const findContactById = async (contactId, userId) => {
+export const getContactById = async (contactId, userId) => {
   const data = await ContactsCollection.findOne({
     _id: contactId,
     userId,
