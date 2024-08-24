@@ -46,20 +46,7 @@ responses:
       application/json:
         schema:
           type: object
-          required:
-            - status
-            - message
-            - data
-          properties:
-            status:
-              type: integer
-              example: 201
-            message:
-              type: string
-              example: Successfully created a contact!
-            data:
-              type: object
-              $ref: '../../components/schemas/contact.yaml'
+          $ref: '../../components/schemas/contact.yaml'
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':

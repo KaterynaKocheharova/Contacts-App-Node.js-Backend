@@ -56,11 +56,7 @@ export const createContactController = async (req, res) => {
     userId: req.user._id,
     photo: photoURL,
   });
-  res.status(201).send({
-    status: 201,
-    message: `Successfully created a contact`,
-    data: newContact,
-  });
+  res.status(201).send(newContact);
 };
 
 export const deleteContactController = async (req, res) => {
@@ -86,7 +82,7 @@ export const upsertContactController = async (req, res) => {
       isFavorite: req.body.isFavorite,
       type: req.body.contactType,
       userId: req.user._id,
-      photoURL: photoURL
+      photoURL: photoURL,
     },
     {
       upsert: true,
