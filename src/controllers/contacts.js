@@ -87,6 +87,7 @@ export const upsertContactController = async (req, res) => {
   if (!upsertedContact) {
     throw createHttpError('404', 'Contact not found');
   }
+
   const status = upsertedContact.isNew ? 201 : 200;
   res.status(status).send({
     status,
