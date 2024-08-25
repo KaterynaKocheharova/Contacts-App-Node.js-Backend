@@ -62,10 +62,10 @@ export const deleteContact = async (contactId, userId) =>
     userId,
   });
 
-export const upsertContact = async (id, userId, payload, options = {}) => {
+export const upsertContact = async (contactId, userId, newData, options = {}) => {
   const rawData = await ContactsCollection.findOneAndUpdate(
-    { _id: id, userId },
-    payload,
+    { _id: contactId, userId },
+    newData,
     {
       new: true,
       includeResultMetadata: true,

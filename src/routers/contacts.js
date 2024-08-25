@@ -5,7 +5,6 @@ import {
   createContactController,
   deleteContactController,
   upsertContactController,
-  patchContactController,
 } from '../controllers/contacts.js';
 import express from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -39,13 +38,6 @@ router.put(
   validateBody(updateContactValidationSchema),
   ctrlWrapper(upsertContactController),
 );
-router.patch(
-  '/:contactId',
-  upload.single('photo'),
-  jsonParser,
-  isValidId,
-  validateBody(updateContactValidationSchema),
-  ctrlWrapper(patchContactController),
-);
+
 
 export default router;

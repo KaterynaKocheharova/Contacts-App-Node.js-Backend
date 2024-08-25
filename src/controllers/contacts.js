@@ -73,21 +73,17 @@ export const upsertContactController = async (req, res) => {
   const photoURL = await savePhoto(req.file);
   const userId = req.user._id;
   const { contactId } = req.params;
-  const upsertedContact = await upsertContact(
-    userId,
-    contactId,
-    {
-      name: req.body.name,
-      phoneNumber: req.body.phoneNumber,
-      isFavorite: req.body.isFavorite,
-      type: req.body.contactType,
-      userId: req.user._id,
-      photoURL: photoURL,
-    },
-    {
-      upsert: true,
-    },
-  );
+  const newData = {
+    name: req.body.name,
+    phoneNumber: req.body.phoneNumber,
+    isFavorite: req.body.isFavorite,
+    type: req.body.contactType,
+    userId: req.user._id,
+    photoURL: photoURL,
+  };
+  const upsertedContact = await upsertContact(contactId, userId, newData, {
+    upsert: true,
+  });
   if (!upsertedContact) {
     throw createHttpError('404', 'Contact not found');
   }
@@ -99,25 +95,3 @@ export const upsertContactController = async (req, res) => {
   });
 };
 
-export const patchContactController = async (req, res) => {
-  const photoURL = await savePhoto(req.file);
-  const userId = req.user.id;
-  const { contactId } = req.params;
-  const patchedContact = await upsertContact(contactId, userId, {
-    name: req.body.name,
-    phoneNumber: req.body.phoneNumber,
-    isFavorite: req.body.isFavorite,
-    type: req.body.contactType,
-    userId: req.user._id,
-    photo: photoURL,
-  });
-  if (!patchedContact) {
-    throw createHttpError(404, 'Contact not found');
-  }
-
-  res.status(200).send({
-    status: 200,
-    message: 'Successfully patched the contact',
-    data: patchedContact.contact,
-  });
-};
