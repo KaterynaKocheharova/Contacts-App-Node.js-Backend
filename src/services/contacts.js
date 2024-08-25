@@ -56,13 +56,11 @@ export const createContact = async (newContact) => {
   return data;
 };
 
-export const deleteContact = async (contactId, userId) => {
-  const data = await ContactsCollection.findOneAndDelete({
+export const deleteContact = async (contactId, userId) =>
+  ContactsCollection.findOneAndDelete({
     _id: contactId,
     userId,
   });
-  return data;
-};
 
 export const upsertContact = async (id, userId, payload, options = {}) => {
   const rawData = await ContactsCollection.findOneAndUpdate(

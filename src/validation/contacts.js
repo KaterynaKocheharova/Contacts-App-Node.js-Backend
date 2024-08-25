@@ -52,5 +52,4 @@ export const updateContactValidationSchema = Joi.object({
   photo: Joi.string().messages({
     'string': 'Photo should be a string',
   }),
-
 });
