@@ -35,5 +35,3 @@ responses:
               example: Reset password email has been successfully sent.
   '404':
     $ref: '../../../components/responses/userNotFound/404-2.yaml'
-  '500':
-    $ref: '../../../components/responses/failedToSendEmail/500-2.yaml'

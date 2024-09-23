@@ -47,6 +47,3 @@ responses:
                   example: lVA0IQW4/fWvdxKhAPpAOKISjR2ep2yrjqaYAHf+
   '401':
     $ref: '../../../components/responses/401.yaml'
-  '500':
-    $ref: '../../../components/responses/500.yaml'
-

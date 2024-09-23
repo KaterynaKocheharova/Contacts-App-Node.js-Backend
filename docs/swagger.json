@@ -170,9 +170,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -258,9 +255,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -324,9 +318,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -437,9 +428,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -475,9 +463,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -554,9 +539,6 @@
           },
           "409": {
             "$ref": "#/components/responses/409"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -635,9 +617,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -713,9 +692,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -743,9 +719,6 @@
         "responses": {
           "204": {
             "description": "User logged out. No content"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -805,9 +778,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404-2"
-          },
-          "500": {
-            "$ref": "#/components/responses/500-2"
           }
         }
       }
@@ -876,9 +846,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404-2"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -921,9 +888,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -988,9 +952,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1236,35 +1197,6 @@
           }
         }
       },
-      "500": {
-        "description": "Server error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "name",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Something went wrong"
-                },
-                "data": {
-                  "type": "string",
-                  "example": "Unexpected token in json"
-                }
-              }
-            }
-          }
-        }
-      },
       "404-2": {
         "description": "Not found error",
         "content": {
@@ -1283,35 +1215,6 @@
                 "data": {
                   "type": "string",
                   "example": "User not found"
-                }
-              }
-            }
-          }
-        }
-      },
-      "500-2": {
-        "description": "Server error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "name",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Something went wrong"
-                },
-                "data": {
-                  "type": "string",
-                  "example": "Failed to send the email, please try again later (for resetting password)."
                 }
               }
             }

@@ -14,5 +14,4 @@ parameters:
 responses:
   '204':
     description: User logged out. No content
-  '500':
-    $ref: '../../../components/responses/500.yaml'
+
