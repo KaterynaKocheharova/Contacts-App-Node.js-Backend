@@ -23,7 +23,7 @@ export const createContactValidationSchema = Joi.object({
     'any.only': 'Contact should be of type work, home, or personal',
   }),
   photo: Joi.string().messages({
-    'string': 'Photo should be a string',
+    string: 'Photo should be a string',
   }),
 });
 
@@ -49,7 +49,7 @@ export const updateContactValidationSchema = Joi.object({
   contactType: Joi.string().valid('work', 'home', 'personal').messages({
     'any.only': 'Contact should be of type work, home, or personal',
   }),
-  photo: Joi.string().messages({
-    'string': 'Photo should be a string',
+  photo: Joi.string().allow("").messages({
+    string: 'Photo should be a string',
   }),
 });
