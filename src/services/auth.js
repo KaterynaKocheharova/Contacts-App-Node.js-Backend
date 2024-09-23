@@ -7,7 +7,7 @@ import Handlebars from 'handlebars';
 import { env } from '../utils/env.js';
 import { User } from '../db/models/user.js';
 import { Session } from '../db/models/session.js';
-import { createSession } from '../utils/authUtils.js';
+import { createSession } from './utils.js';
 import { sendEmail } from '../utils/sendMail.js';
 import { SMTP } from '../constants/index.js';
 import { TEMPLATES_DIR } from '../constants/index.js';
@@ -15,11 +15,14 @@ import { validateCode } from '../utils/googleOAuth2.js';
 import { randomBytes } from 'node:crypto';
 import { getFullNameFromGoogleTokenPayload } from '../utils/googleOAuth2.js';
 
+// ====================================== MICROSERVICES
+
+// - FIND SESSION
 export const findSessionByToken = (token) =>
   Session.findOne({
     accessToken: token,
   });
-
+// - FIND USER
 export const findUserById = (id) => User.findById(id);
 
 // ======================================= REGISTER
@@ -49,9 +52,11 @@ export const loginUser = async (userData) => {
   if (!isCorrectPassowrd) {
     throw createHttpError(401, 'Anauthorized');
   }
+
   await Session.deleteOne({
     userId: user._id,
   });
+
   const newSession = createSession(user._id);
   return await Session.create(newSession);
 };

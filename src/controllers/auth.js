@@ -7,7 +7,7 @@ import {
   resetPassword,
   loginOrSignupWithGoogle,
 } from '../services/auth.js';
-import { setupCookies } from '../utils/authUtils.js';
+import { setupCookies } from './utils.js';
 import { generateAuthUrl } from '../utils/googleOAuth2.js';
 
 // ========================================== REGISTER
