@@ -79,7 +79,7 @@ export const upsertContactController = async (req, res) => {
     isFavorite: req.body.isFavorite,
     type: req.body.contactType,
     userId: req.user._id,
-    photoURL: photoURL,
+    photo: photoURL,
   };
   const upsertedContact = await upsertContact(contactId, userId, newData, {
     upsert: true,

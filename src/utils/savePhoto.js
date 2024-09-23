@@ -2,7 +2,7 @@ import { env } from "./env.js";
 import { saveFileToCloudinary } from "./saveFileToCloudinary.js";
 import { saveFileToUploadDir } from "./saveFileToUploadDir.js";
 
-export const savePhoto = async (photo) => {
+const savePhoto = async (photo) => {
   let photoURL;
   if (photo) {
     if (env('ENABLE_CLOUDINARY') === 'true') {
@@ -11,7 +11,6 @@ export const savePhoto = async (photo) => {
       photoURL = await saveFileToUploadDir(photo);
     }
   }
-
 return photoURL;
 };
 
