@@ -8,7 +8,7 @@ export const createSession = (id) => {
   const refreshTokenValidUntil = new Date(Date.now() + THIRTY_DAYS);
 
   return {
-    userId: id,
+    sessionId: id,
     accessToken,
     refreshToken,
     accessTokenValidUntil,

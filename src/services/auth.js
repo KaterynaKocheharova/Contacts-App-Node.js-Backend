@@ -54,7 +54,7 @@ export const loginUser = async (userData) => {
   }
 
   await Session.deleteOne({
-    userId: user._id,
+    sessionId: user._id,
   });
 
   const newSession = createSession(user._id);
@@ -63,9 +63,9 @@ export const loginUser = async (userData) => {
 
 // =================================== REFRESH
 
-export const refreshUsersSession = async ({ refreshToken, userId }) => {
+export const refreshUsersSession = async ({ refreshToken, sessionId }) => {
   const session = await Session.findOne({
-    userId,
+    sessionId,
     refreshToken,
   });
   if (!session) {
@@ -77,11 +77,12 @@ export const refreshUsersSession = async ({ refreshToken, userId }) => {
     throw createHttpError(401, 'Session token expired');
   }
 
-  const newSession = createSession(session.userId);
   await Session.deleteOne({
-    userId,
+    sessionId,
     refreshToken,
   });
+
+  const newSession = createSession(session.sessionId);
 
   return Session.create(newSession);
 };
