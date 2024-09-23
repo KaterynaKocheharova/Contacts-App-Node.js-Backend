@@ -334,9 +334,9 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Patch contact by id",
-        "operationId": "patchContact",
-        "description": "Patch contact by id",
+        "summary": "Update contact by id",
+        "operationId": "updateContact",
+        "description": "Update contact by id",
         "security": [
           {
             "bearerAuth": []
@@ -401,7 +401,7 @@
         },
         "responses": {
           "200": {
-            "description": "Patched contact by id",
+            "description": "Updated contact by id",
             "content": {
               "application/json": {
                 "schema": {
@@ -418,7 +418,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully patched the contact !"
+                      "example": "Successfully updated the contact !"
                     },
                     "data": {
                       "type": "object",
