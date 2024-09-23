@@ -60,7 +60,27 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully updated the contact !
+              example: Successfully upserted the contact
+            data:
+              type: object
+              $ref: '../../../components/schemas/contact.yaml'
+  '201':
+    description: Creates a new contact if a contact isn't found by id
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully upserted the contact
             data:
               type: object
               $ref: '../../../components/schemas/contact.yaml'
