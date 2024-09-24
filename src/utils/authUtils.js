@@ -15,3 +15,14 @@ export const createSession = (id) => {
     refreshTokenValidUntil,
   };
 };
+
+export const setupCookies = (res, session) => {
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+  res.cookie('sessionId', session.sessionId, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+};

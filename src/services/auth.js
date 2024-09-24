@@ -7,7 +7,7 @@ import Handlebars from 'handlebars';
 import { env } from '../utils/env.js';
 import { User } from '../db/models/user.js';
 import { Session } from '../db/models/session.js';
-import { createSession } from './utils.js';
+import { createSession } from '../utils/authUtils.js';
 import { sendEmail } from '../utils/sendMail.js';
 import { SMTP } from '../constants/index.js';
 import { TEMPLATES_DIR } from '../constants/index.js';
