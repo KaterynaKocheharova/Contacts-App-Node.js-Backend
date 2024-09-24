@@ -662,7 +662,7 @@
         "parameters": [
           {
             "in": "cookie",
-            "name": "userId",
+            "name": "sessionId",
             "required": true,
             "schema": {
               "type": "string"

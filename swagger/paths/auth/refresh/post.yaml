@@ -6,7 +6,7 @@ description: Refresh the user's session using the provided refresh token stored 
 security: []
 parameters:
   - in: cookie
-    name: userId
+    name: sessionId
     required: true
     schema:
       type: string
