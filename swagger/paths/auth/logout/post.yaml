@@ -2,11 +2,11 @@ tags:
   - Auth
 summary: Logout user
 operationId: logoutUser
-description: makes user log out using cookie userId
+description: Logs out user using cookie sessionId
 security: []
 parameters:
   - in: cookie
-    name: userId
+    name: sessionId
     required: true
     schema:
       type: string
