@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://nodejs-hw-mongodb-ij0l.onrender.com"
+      "url": "nodejs-hw-mongodb-ij0l.onrender.com"
     }
   ],
   "tags": [
@@ -667,7 +667,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The ID of the user.",
+            "description": "The ID of the session.",
             "example": "60c72b2f9b1d8e2f88e33e2a"
           },
           {
