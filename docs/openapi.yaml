@@ -13,7 +13,7 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: https://nodejs-hw-mongodb-ij0l.onrender.com
+  - url: nodejs-hw-mongodb-ij0l.onrender.com
 paths:
   /contacts:
     get:
