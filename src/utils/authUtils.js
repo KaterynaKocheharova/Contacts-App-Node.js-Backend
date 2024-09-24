@@ -8,7 +8,7 @@ export const createSession = (id) => {
   const refreshTokenValidUntil = new Date(Date.now() + THIRTY_DAYS);
 
   return {
-    sessionId: id,
+    userId: id,
     accessToken,
     refreshToken,
     accessTokenValidUntil,
@@ -21,7 +21,7 @@ export const setupCookies = (res, session) => {
     httpOnly: true,
     expires: new Date(Date.now() + THIRTY_DAYS),
   });
-  res.cookie('sessionId', session.sessionId, {
+  res.cookie('sessionId', session._id, {
     httpOnly: true,
     expires: new Date(Date.now() + THIRTY_DAYS),
   });

@@ -15,14 +15,11 @@ import { validateCode } from '../utils/googleOAuth2.js';
 import { randomBytes } from 'node:crypto';
 import { getFullNameFromGoogleTokenPayload } from '../utils/googleOAuth2.js';
 
-// ====================================== MICROSERVICES
-
-// - FIND SESSION
 export const findSessionByToken = (token) =>
   Session.findOne({
     accessToken: token,
   });
-// - FIND USER
+
 export const findUserById = (id) => User.findById(id);
 
 // ======================================= REGISTER
@@ -54,7 +51,7 @@ export const loginUser = async (userData) => {
   }
 
   await Session.deleteOne({
-    sessionId: user._id,
+    userId: user._id,
   });
 
   const newSession = createSession(user._id);
@@ -65,7 +62,7 @@ export const loginUser = async (userData) => {
 
 export const refreshUsersSession = async ({ refreshToken, sessionId }) => {
   const session = await Session.findOne({
-    sessionId,
+    _id: sessionId,
     refreshToken,
   });
   if (!session) {
@@ -78,11 +75,11 @@ export const refreshUsersSession = async ({ refreshToken, sessionId }) => {
   }
 
   await Session.deleteOne({
-    sessionId,
+    _id: sessionId,
     refreshToken,
   });
 
-  const newSession = createSession(session.sessionId);
+  const newSession = createSession(session.userId);
 
   return Session.create(newSession);
 };
