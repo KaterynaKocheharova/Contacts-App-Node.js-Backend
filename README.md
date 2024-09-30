@@ -7,5 +7,5 @@ This is a backend service designed to fulfill the following actions:
 -Paginating contacts
 -Filtering contacts
 
-This service is built using MongoDB as the database and Express.js as the main framework.
+This service uses MongoDB as the database and Express.js as the main framework.
 
