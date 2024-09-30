@@ -28,27 +28,34 @@ router.post(
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );
+
 router.post(
   '/login',
   jsonParser,
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
+
 router.post('/refresh', ctrlWrapper(refreshUserSessionController));
+
 router.post('/logout', ctrlWrapper(logOutController));
+
 router.post(
   '/send-reset-email',
   jsonParser,
   validateBody(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
 );
+
 router.post(
   '/reset-pwd',
   jsonParser,
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+
 router.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
+
 router.post(
   '/confirm-oauth',
   jsonParser,

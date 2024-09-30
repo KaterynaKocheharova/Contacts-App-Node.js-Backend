@@ -88,7 +88,7 @@ export const refreshUsersSession = async ({ refreshToken, sessionId }) => {
 
 export const logOut = (sessionId) => Session.deleteOne({ _id: sessionId });
 
-// ==================================== REQUEST RESET PASSWORD
+// ==================================== REQUEST RESET PASSWORD EMAIL
 
 export const requestResetEmail = async (email) => {
   const user = await User.findOne({ email });
@@ -182,7 +182,8 @@ export const loginOrSignupWithGoogle = async (code) => {
   const payload = loginTicket.getPayload();
   if (!payload) throw createHttpError(401);
 
-  let user = User.findOne({ email: payload.email });
+  let user = await User.findOne({ email: payload.email });
+
   if (!user) {
     const password = bcrypt.hash(randomBytes(10), 10);
     user = User.create({
@@ -192,7 +193,17 @@ export const loginOrSignupWithGoogle = async (code) => {
     });
   }
 
-  const newSession = createSession(user._id);
+  console.log(user);
 
-  return await Session.create(newSession);
+
+
+
+  // await Session.deleteOne({
+  //   userId: user._id,
+  // });
+
+  // const newSession = createSession(user._id);
+
+  // return await Session.create(newSession);
+  return;
 };
