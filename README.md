@@ -1,19 +1,17 @@
 # CONTACTS SERVICE
-This is a backend service designed to fulfill the following actions:
+This is a backend service designed to interact with frontend applications intended for contacts managing.
 
 ## KEY FEATURES
 
--Logging in and registering
+-Signin, signup, and refreshing a user with the use of sessions
 
--Managing contacts in a database
+-Managing contacts in the MongoDB
 
--Resetting passwords
+-Resetting passwords through SMTP server.
 
--Logging in with Google
+-Signin and signup with Google
 
--Paginating contacts
-
--Filtering contacts
+-Paginating and filtering contacts
 
 ###
 
