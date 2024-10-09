@@ -90,7 +90,7 @@ export const requestResetEmailController = async (req, res) => {
   await requestResetEmail(email);
   res.status(200).json({
     status: 200,
-    message: 'Reset password email has been successfully sent.'
+    message: 'Reset password email has been successfully sent.',
   });
 };
 
@@ -100,7 +100,7 @@ export const resetPasswordController = async (req, res) => {
   await resetPassword({ password: req.body.password, token: req.body.token });
   res.status(200).json({
     status: 200,
-    message: 'Password has been successfully reset.'
+    message: 'Password has been successfully reset.',
   });
 };
 
@@ -122,13 +122,13 @@ export const getGoogleOAuthUrlController = (req, res) => {
 
 export const loginOrSignupWithGoogleController = async (req, res) => {
   const session = await loginOrSignupWithGoogle(req.body.code);
-  // setupCookies(res, session);
+  setupCookies(res, session);
 
   res.status(200).json({
     status: 200,
     message: 'Successfully logged in via Google OAuth!',
-    // data: {
-    //   accessToken: session.accessToken,
-    // },
+    data: {
+      accessToken: session.accessToken,
+    },
   });
 };

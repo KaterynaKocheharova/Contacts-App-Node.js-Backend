@@ -195,15 +195,11 @@ export const loginOrSignupWithGoogle = async (code) => {
 
   console.log(user);
 
+  await Session.deleteOne({
+    userId: user._id,
+  });
 
+  const newSession = createSession(user._id);
 
-
-  // await Session.deleteOne({
-  //   userId: user._id,
-  // });
-
-  // const newSession = createSession(user._id);
-
-  // return await Session.create(newSession);
-  return;
+  return await Session.create(newSession);
 };
