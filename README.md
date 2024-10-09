@@ -3,15 +3,15 @@ This is a backend service designed to interact with frontend applications intend
 
 ## KEY FEATURES
 
--Signin, signup, and refreshing a user with the use of sessions
+* Signin, signup, and refreshing a user with the use of sessions
 
--Managing contacts in the MongoDB
+* Managing contacts in the MongoDB
 
--Resetting passwords through SMTP server.
+* Resetting passwords through SMTP server.
 
--Signin and signup with Google
+* Signin and signup with Google
 
--Paginating and filtering contacts
+* Paginating and filtering contacts
 
 ###
 
