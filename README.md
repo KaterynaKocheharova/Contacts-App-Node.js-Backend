@@ -1,4 +1,7 @@
+# CONTACTS SERVICE
 This is a backend service designed to fulfill the following actions:
+
+## KEY FEATURES
 
 -Logging in and registering
 
@@ -11,6 +14,8 @@ This is a backend service designed to fulfill the following actions:
 -Paginating contacts
 
 -Filtering contacts
+
+###
 
 This service uses MongoDB as the database and Express.js as the main framework.
 
