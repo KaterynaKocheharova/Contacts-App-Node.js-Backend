@@ -1,0 +1,22 @@
+description: Bad Request Error
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 400
+        name:
+          type: string
+          example: "Bad Request"
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              example: 'Username is required'

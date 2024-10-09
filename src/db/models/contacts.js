@@ -24,9 +24,17 @@ const contactsSchema = new Schema(
       required: true,
       default: 'personal',
     },
+    photo: {
+      type: String,
+      default: null
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+      required: true
+    },
   },
   { timestamps: true, versionKey: false },
 );
 
 export const ContactsCollection = model('contacts', contactsSchema);
-

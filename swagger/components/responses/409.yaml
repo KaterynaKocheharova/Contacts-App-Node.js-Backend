@@ -1,0 +1,21 @@
+description: InUse error
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: integer
+          example: 409
+        name:
+          type: string
+          example: Conflict
+        data:
+          type: object
+          properties:
+            error:
+             type: string
+             example: 'Email in use'

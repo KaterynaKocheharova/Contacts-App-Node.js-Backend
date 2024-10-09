@@ -1,0 +1,26 @@
+tags:
+  - Auth
+summary: get oauth url
+operationId: getOAuthUrl
+description: Get url for google authentification
+security: []
+responses:
+  '200':
+    description: Successfully retrieved Google OAuth URL.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully got Google OAuth url
+            data:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: https://accounts.google.com/o/oauth2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=email%20profile
